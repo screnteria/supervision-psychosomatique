@@ -53,10 +53,13 @@ body {
 
 .main-title {
   font-family: 'DM Serif Display', serif;
-  font-size: 38px;
-  line-height: 1.1;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.15;
   color: var(--black);
   margin-bottom: 8px;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .main-title em {
