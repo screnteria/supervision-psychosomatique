@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartes de supervision - Sept regards</title>
+<style>
+  :root{ --ink:#1C1A1B; --red:#B0122E; --paper:#F7F4EF; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);}
+  header{padding:22px 20px 8px;text-align:center}
+  header h1{margin:0;font-size:22px;letter-spacing:.2px}
+  header p{margin:4px 0 0;font-size:13px;color:#6b6560}
+  .wrap{max-width:560px;margin:0 auto;padding:12px 16px 60px}
+  .modes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .modes button{border:1px solid #d8d2c8;background:#fff;color:var(--ink);padding:8px 12px;border-radius:20px;font-size:13px;cursor:pointer}
+  .modes button.on{background:var(--red);color:#fff;border-color:var(--red)}
+  .hint{text-align:center;font-size:12px;color:#8a837c;min-height:16px;margin:2px 0 10px}
+  .regards{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0 16px}
+  .chip{width:26px;height:26px;border-radius:6px;border:2px solid transparent;cursor:pointer;font-size:12px;font-weight:bold;display:flex;align-items:center;justify-content:center;color:#1C1A1B}
+  .chip.off{opacity:.32}
+  .stage{perspective:1600px;margin:6px auto}
+  .card{position:relative;width:300px;height:460px;margin:0 auto;trans-style:preserve-3d;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
+  .card.flip{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:24px 22px;display:flex;flex-direction:column;box-shadow:0 10px 26px rgba(0,0,0,.14)}
+  .back{transform:rotateY(180deg)}
+  .tag{font-size:11px;font-weight:bold;letter-spacing:.6px;text-transform:uppercase;opacity:.7}
+  .catn{font-size:12px;opacity:.7;margin-top:2px}
+  .title{font-size:24px;font-weight:bold;margin:14px 0 10px;line-height:1.15}
+  .rule{height:1px;background:rgba(28,26,27,.28);margin:2px 0 14px}
+  .q{font-size:16px;line-height:1.5}
+  .plabel{font-size:11px;font-weight:bold;letter-spacing:.6px;opacity:.7;margin-bottom:10px}
+  .piste{font-size:14.5px;line-height:1.4;margin:0 0 12px;padding-left:16px;position:relative}
+  .piste:before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;background:rgba(28,26,27,.55)}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;font-size:11px;opacity:.6}
+  .controls{display:flex;gap:10px;justify-content:center;margin:20px 0 6px}
+  .controls button{border:none;border-radius:24px;padding:12px 20px;font-size:14px;cursor:pointer}
+  .draw{background:var(--red);color:#fff}
+  .flipb{background:#fff;color:var(--ink);border:1px solid #d8d2c8}
+  .empty{color:#8a837c;font-size:15px;text-align:center;padding-top:180px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Cartes de supervision</h1>
+  <p>Sept regards sur un cas &middot; Saira-Christine Renteria</p>
+</header>
+<div class="wrap">
+  <div class="modes" id="modes"></div>
+  <div class="hint" id="hint">Choisis un mode, ou tire directement une carte.</div>
+  <div class="regards" id="regards"></div>
+  <div class="stage">
+    <div class="card" id="card" onclick="flip()">
+      <div class="face front" id="front"><div class="empty">Appuie sur &laquo; Tirer une carte &raquo;.</div></div>
+      <div class="face back" id="back"></div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="draw" onclick="draw()">Tirer une carte</button>
+    <button class="flipb" onclick="flip()">Retourner</button>
+  </div>
+</div>
+<script>
+const CARDS = [{"cat": 1, "num": 1, "code": "1-01", "title": "Qui est-elle vraiment", "q": "Avant tout diagnostic, que sais-tu de la personne elle-même ? Ses mots, son corps, son histoire telle qu'elle la raconte.", "pistes": ["Décris-la sans vocabulaire médical, en trois phrases.", "Qu'est-ce qui, dans sa manière de parler ou de se tenir, t'a marqué ?", "Quelle part de son histoire reste dans l'ombre ?"], "catname": "La patiente et sa situation", "color": "#C9B7E4"}, {"cat": 1, "num": 2, "code": "1-02", "title": "Le motif derrière le motif", "q": "Pourquoi consulte-t-elle maintenant, et pas il y a trois mois ou dans trois mois ?", "pistes": ["Quelle demande explicite formule-t-elle ?", "Quelle demande n'ose-t-elle peut-être pas dire ?", "Qui l'a orientée, et qu'attend cette personne du résultat ?"], "catname": "La patiente et sa situation", "color": "#C9B7E4"}, {"cat": 1, "num": 3, "code": "1-03", "title": "Le corps qui parle", "q": "Quels signes cliniques as-tu vus, entendus, palpés, avant même de les nommer ?", "pistes": ["Sépare l'observation brute de ton interprétation.", "Un signe t'a-t-il surpris ou dérangé ?", "Qu'as-tu peut-être cessé de regarder trop vite ?"], "catname": "La patiente et sa situation", "color": "#C9B7E4"}, {"cat": 1, "num": 4, "code": "1-04", "title": "Ce qu'elle traverse hors du cabinet", "q": "Travail, logement, langue, statut de séjour, entourage : que pèse le hors-médical dans ce tableau ?", "pistes": ["Quels facteurs sociaux modifient le pronostic ?", "Que peux-tu vérifier plutôt que supposer ?", "Une barrière de langue a-t-elle brouillé l'échange ?"], "catname": "La patiente et sa situation", "color": "#C9B7E4"}, {"cat": 1, "num": 5, "code": "1-05", "title": "La patiente absente", "q": "Quand tu présentes ce cas, quelle version d'elle décris-tu ? La reconnaîtrait-elle ?", "pistes": ["Quels mots sont les siens, lesquels sont les tiens ?", "Quel jugement s'est glissé dans ta description ?", "Que dirait-elle si elle entendait cette présentation ?"], "catname": "La patiente et sa situation", "color": "#C9B7E4"}, {"cat": 2, "num": 1, "code": "2-01", "title": "Le choix et ses raisons", "q": "Pour chaque décision prise, pourrais-tu nommer la raison en une phrase ?", "pistes": ["Quelle donnée ou recommandation soutient ce choix ?", "Qu'aurais-tu fait avec deux fois plus de temps ?", "Qu'aurais-tu fait avec la moitié des ressources ?"], "catname": "Gestes et décisions cliniques", "color": "#A7D8C0"}, {"cat": 2, "num": 2, "code": "2-02", "title": "Les routes non prises", "q": "Quelles autres options existaient, et pourquoi les as-tu écartées ?", "pistes": ["Nomme au moins deux alternatives.", "Laquelle t'a semblé tentante mais risquée ?", "Qu'est-ce qui a fait pencher la balance ?"], "catname": "Gestes et décisions cliniques", "color": "#A7D8C0"}, {"cat": 2, "num": 3, "code": "2-03", "title": "Le moment du doute", "q": "À quel instant précis as-tu hésité, et qu'as-tu fait de cette hésitation ?", "pistes": ["L'as-tu dit à quelqu'un, ou gardée pour toi ?", "Le doute portait-il sur le savoir ou sur le geste ?", "Qu'aurait changé un appel à une personne sénior ?"], "catname": "Gestes et décisions cliniques", "color": "#A7D8C0"}, {"cat": 2, "num": 4, "code": "2-04", "title": "Trop, ou trop peu", "q": "Cette décision penchait-elle vers l'excès de prudence ou vers le raccourci ?", "pistes": ["Qu'est-ce qui te pousse d'habitude vers l'un ou l'autre ?", "La fatigue ou l'horaire ont-ils joué ?", "Referais-tu le même geste demain matin, reposé ?"], "catname": "Gestes et décisions cliniques", "color": "#A7D8C0"}, {"cat": 2, "num": 5, "code": "2-05", "title": "La règle et l'exception", "q": "Ce cas suivait-il le protocole, ou demandait-il de s'en écarter ?", "pistes": ["Qu'est-ce qui justifierait l'écart ?", "Qui aurais-tu consulté avant de dévier ?", "Le protocole servait-il la patiente ou te rassurait-il ?"], "catname": "Gestes et décisions cliniques", "color": "#A7D8C0"}, {"cat": 3, "num": 1, "code": "3-01", "title": "Le courant entre vous", "q": "Comment décrirais-tu le climat de cette rencontre ? Fluide, tendu, distant, trop proche ?", "pistes": ["Quel mot te vient en premier ?", "À quel moment le ton a-t-il changé ?", "Qui menait l'échange ?"], "catname": "La relation soignante-patiente", "color": "#F0DE8A"}, {"cat": 3, "num": 2, "code": "3-02", "title": "Ce qui se joue sans mots", "q": "Qu'est-ce qui circulait dans la pièce sans être dit ?", "pistes": ["Un non-dit pesait-il sur la consultation ?", "As-tu ressenti de la méfiance, de l'attente, de la peur ?", "Qu'as-tu toi-même tu ?"], "catname": "La relation soignante-patiente", "color": "#F0DE8A"}, {"cat": 3, "num": 3, "code": "3-03", "title": "Le rôle qu'on t'assigne", "q": "En quelle figure cette patiente t'a-t-elle placé ? Sauveuse, juge, parent, étrangère ?", "pistes": ["Ce rôle te convenait-il ?", "L'as-tu accepté ou refusé ?", "Que révèle ce rôle de son histoire ?"], "catname": "La relation soignante-patiente", "color": "#F0DE8A"}, {"cat": 3, "num": 4, "code": "3-04", "title": "La juste distance", "q": "Étais-tu trop près pour voir clair, ou trop loin pour toucher juste ?", "pistes": ["Qu'est-ce qui règle ta distance avec les patient-es ?", "Ce cas t'a-t-il rapproché plus que d'habitude ?", "Où passe ta limite ?"], "catname": "La relation soignante-patiente", "color": "#F0DE8A"}, {"cat": 3, "num": 5, "code": "3-05", "title": "Le contrat implicite", "q": "Sur quoi vous étiez-vous accordés, elle et toi, sans jamais le formuler ?", "pistes": ["Les attentes étaient-elles alignées ?", "Un malentendu couvait-il ?", "Qu'aurait clarifié une phrase dite à voix haute ?"], "catname": "La relation soignante-patiente", "color": "#F0DE8A"}, {"cat": 4, "num": 1, "code": "4-01", "title": "Ce que tu as ressenti", "q": "Quelle émotion cette situation a-t-elle réveillée en toi, sur le moment et après ?", "pistes": ["Nomme-la sans la juger.", "Où l'as-tu sentie dans ton corps ?", "L'as-tu montrée ou masquée ?"], "catname": "Le vécu du médecin en formation", "color": "#F2C08A"}, {"cat": 4, "num": 2, "code": "4-02", "title": "L'écho personnel", "q": "Ce cas t'a-t-il renvoyé à quelque chose de ta propre vie ?", "pistes": ["Un souvenir, une peur, une proche ?", "En quoi cela a-t-il coloré ton regard ?", "Qu'est-ce que cela t'a fait perdre de vue ?"], "catname": "Le vécu du médecin en formation", "color": "#F2C08A"}, {"cat": 4, "num": 3, "code": "4-03", "title": "La patiente qui te reste", "q": "Pourquoi ce cas-là revient-il te chercher, plutôt qu'un autre ?", "pistes": ["Qu'est-ce qui refuse de se classer ?", "Est-ce la culpabilité, l'admiration, la colère ?", "Que cherche cette émotion à te dire ?"], "catname": "Le vécu du médecin en formation", "color": "#F2C08A"}, {"cat": 4, "num": 4, "code": "4-04", "title": "Tes angles morts", "q": "Qu'est-ce que ta fatigue, tes valeurs ou tes préjugés t'ont peut-être caché ?", "pistes": ["Une réaction rapide t'a-t-elle fermé une piste ?", "Un jugement moral s'est-il glissé dans le soin ?", "Qui, à ta place, aurait vu autre chose ?"], "catname": "Le vécu du médecin en formation", "color": "#F2C08A"}, {"cat": 4, "num": 5, "code": "4-05", "title": "Le poids que tu portes", "q": "Que gardes-tu de cette journée en rentrant chez toi ?", "pistes": ["Ce poids est-il à toi, ou à la patiente ?", "À qui pourrais-tu le déposer ?", "Qu'est-ce qui t'aiderait à le reposer avant demain ?"], "catname": "Le vécu du médecin en formation", "color": "#F2C08A"}, {"cat": 5, "num": 1, "code": "5-01", "title": "L'écho dans la salle", "q": "Ce qui se passe ici, dans la supervision, ressemble-t-il à ce qui s'est passé avec la patiente ?", "pistes": ["Le groupe se sent-il pressé, bloqué, protecteur ?", "Cette tension vient-elle du cas lui-même ?", "Que t'apprend cet écho sur la relation d'origine ?"], "catname": "Le processus parallèle", "color": "#EFA48F"}, {"cat": 5, "num": 2, "code": "5-02", "title": "Quand le récit se répète", "q": "Racontes-tu ce cas comme la patiente a raconté son histoire ?", "pistes": ["Même confusion, même urgence, même silence ?", "Que reproduis-tu de sa manière de dire ?", "Qu'est-ce que cela révèle de son vécu ?"], "catname": "Le processus parallèle", "color": "#EFA48F"}, {"cat": 5, "num": 3, "code": "5-03", "title": "La patiente est dans la pièce", "q": "Si cette patiente écoutait la discussion, que ressentirait-elle ?", "pistes": ["Se sentirait-elle comprise, jugée, réduite ?", "Qui, dans le groupe, prend sa défense ?", "Qui prend la tienne ?"], "catname": "Le processus parallèle", "color": "#EFA48F"}, {"cat": 5, "num": 4, "code": "5-04", "title": "Le blocage partagé", "q": "Le groupe bute-t-il là où tu as buté avec elle ?", "pistes": ["Où la discussion tourne-t-elle en rond ?", "Ce point aveugle est-il aussi le tien ?", "Qu'est-ce qui débloquerait les deux à la fois ?"], "catname": "Le processus parallèle", "color": "#EFA48F"}, {"cat": 5, "num": 5, "code": "5-05", "title": "Ce que tu fais ressentir", "q": "Quelle émotion as-tu, sans le vouloir, transmise au groupe en présentant ?", "pistes": ["Urgence, découragement, agacement ?", "Est-elle la tienne ou celle de la patiente ?", "Que devient cette émotion une fois nommée ?"], "catname": "Le processus parallèle", "color": "#EFA48F"}, {"cat": 6, "num": 1, "code": "6-01", "title": "Ce que le groupe fait au cas", "q": "Comment la présence du groupe change-t-elle la manière de penser ce cas ?", "pistes": ["Quelles voix parlent, lesquelles se taisent ?", "Le consensus vient-il trop vite ?", "Une divergence a-t-elle été étouffée ?"], "catname": "Le vécu de la tutrice et du groupe", "color": "#A9C7E6"}, {"cat": 6, "num": 2, "code": "6-02", "title": "L'angle de chacun-e", "q": "Chaque personne autour de la table regarde ce cas par quelle fenêtre ?", "pistes": ["Qui pense d'abord au geste, qui pense à la relation ?", "Une perspective manque-t-elle ?", "Que verrait une sage-femme, une psychologue, la patiente ?"], "catname": "Le vécu de la tutrice et du groupe", "color": "#A9C7E6"}, {"cat": 6, "num": 3, "code": "6-03", "title": "Le savoir du groupe", "q": "Qu'est-ce que le groupe sait, que personne seul-e ne savait ?", "pistes": ["Quelle idée est née de l'échange lui-même ?", "Qui a osé la question que les autres évitaient ?", "Que retenez-vous ensemble pour la prochaine fois ?"], "catname": "Le vécu de la tutrice et du groupe", "color": "#A9C7E6"}, {"cat": 6, "num": 4, "code": "6-04", "title": "Ma place de tutrice", "q": "D'où est-ce que je regarde, et qu'est-ce que ma position m'empêche de voir ?", "pistes": ["Est-ce que je guide, ou est-ce que je dirige ?", "Ai-je laissé le doute exister ?", "Qu'est-ce que mon expérience projette sur ce cas jeune ?"], "catname": "Le vécu de la tutrice et du groupe", "color": "#A9C7E6"}, {"cat": 6, "num": 5, "code": "6-05", "title": "Le désaccord fécond", "q": "Où le groupe n'est-il pas d'accord, et que protège ce désaccord ?", "pistes": ["Quelle divergence mérite qu'on s'y arrête ?", "Le consensus rapide cache-t-il une gêne ?", "Qu'apprend-on à ne pas trancher tout de suite ?"], "catname": "Le vécu de la tutrice et du groupe", "color": "#A9C7E6"}, {"cat": 7, "num": 1, "code": "7-01", "title": "Le cadre qui contraint", "q": "Quelles règles, quels horaires, quels moyens ont pesé sur cette décision, avant même la clinique ?", "pistes": ["Qu'aurais-tu décidé dans un autre service ?", "La contrainte était-elle réelle ou supposée ?", "Qui fixe ces règles, et pour quel but ?"], "catname": "Le contexte élargi", "color": "#C7DC8A"}, {"cat": 7, "num": 2, "code": "7-02", "title": "L'égalité d'accès", "q": "Cette patiente a-t-elle reçu les mêmes soins qu'une autre au statut différent ?", "pistes": ["Séjour, langue, assurance : ont-ils changé quelque chose ?", "Un examen a-t-il été retardé, ou évité ?", "Qu'est-ce qui garantirait l'égalité de traitement ici ?"], "catname": "Le contexte élargi", "color": "#C7DC8A"}, {"cat": 7, "num": 3, "code": "7-03", "title": "Le poids des origines", "q": "Quelles suppositions culturelles ont circulé, du côté des soignant-es comme de la patiente ?", "pistes": ["Un stéréotype a-t-il orienté le raisonnement ?", "Qu'as-tu vérifié auprès d'elle plutôt que supposé ?", "Qui a servi de traduction, et à quel prix ?"], "catname": "Le contexte élargi", "color": "#C7DC8A"}, {"cat": 7, "num": 4, "code": "7-04", "title": "La ligne rouge éthique", "q": "Une valeur ou un droit était-il en jeu dans ce cas, au-delà de la médecine ?", "pistes": ["Consentement, confidentialité, autonomie : lequel pesait ?", "Qui décidait à la place de qui ?", "Qu'aurais-tu défendu, même seul-e ?"], "catname": "Le contexte élargi", "color": "#C7DC8A"}, {"cat": 7, "num": 5, "code": "7-05", "title": "Après la consultation", "q": "Que devient cette patiente une fois la porte refermée ? Le système la rattrape-t-il ou la lâche-t-il ?", "pistes": ["Le relais était-il assuré ?", "Qui suit, qui coordonne ?", "Que peux-tu changer à ton échelle, dès lundi ?"], "catname": "Le contexte élargi", "color": "#C7DC8A"}];
+const CATS = {"1": {"name": "La patiente et sa situation", "color": "#C9B7E4"}, "2": {"name": "Gestes et décisions cliniques", "color": "#A7D8C0"}, "3": {"name": "La relation soignante-patiente", "color": "#F0DE8A"}, "4": {"name": "Le vécu du médecin en formation", "color": "#F2C08A"}, "5": {"name": "Le processus parallèle", "color": "#EFA48F"}, "6": {"name": "Le vécu de la tutrice et du groupe", "color": "#A9C7E6"}, "7": {"name": "Le contexte élargi", "color": "#C7DC8A"}};
+const MODES = {"cas": {"name": "Supervision de cas", "regards": [1, 2, 7]}, "intervision": {"name": "Intervision", "regards": [5, 6]}, "balint": {"name": "Groupe de type Balint", "regards": [3, 4, 5]}};
+let activeMode = null;
+let activeRegards = new Set([1,2,3,4,5,6,7]);
+let current = null;
+
+function shade(hex,t){ // melange vers l'encre
+  const a=parseInt(hex.slice(1,3),16),b=parseInt(hex.slice(3,5),16),c=parseInt(hex.slice(5,7),16);
+  const m=v=>Math.round(v*(1-t)+28*t);
+  return 'rgb('+m(a)+','+m(b)+','+m(c)+')';
+}
+function renderModes(){
+  const el=document.getElementById('modes');
+  el.innerHTML='';
+  Object.entries(MODES).forEach(([k,v])=>{
+    const b=document.createElement('button');
+    b.textContent=v.name; b.dataset.k=k;
+    if(activeMode===k)b.classList.add('on');
+    b.onclick=()=>{ activeMode=(activeMode===k?null:k);
+      activeRegards=new Set(activeMode?MODES[activeMode].regards:[1,2,3,4,5,6,7]);
+      renderModes();renderRegards();updateHint();};
+    el.appendChild(b);
+  });
+}
+function renderRegards(){
+  const el=document.getElementById('regards');el.innerHTML='';
+  for(let n=1;n<=7;n++){
+    const c=document.createElement('div');
+    c.className='chip'+(activeRegards.has(n)?'':' off');
+    c.style.background=CATS[n].color;c.textContent=n;
+    c.title=CATS[n].name;
+    c.onclick=()=>{ if(activeRegards.has(n))activeRegards.delete(n); else activeRegards.add(n);
+      activeMode=null;renderModes();renderRegards();updateHint();};
+    el.appendChild(c);
+  }
+}
+function updateHint(){
+  const h=document.getElementById('hint');
+  if(activeMode){ h.textContent='Mode '+MODES[activeMode].name+' : regards '+MODES[activeMode].regards.join(', ')+'.';}
+  else{ h.textContent='Regards actifs : '+[...activeRegards].sort().join(', ')+'.';}
+}
+function pool(){ return CARDS.filter(c=>activeRegards.has(c.cat)); }
+function draw(){
+  const p=pool(); if(!p.length)return;
+  let c; do{ c=p[Math.floor(Math.random()*p.length)]; }while(p.length>1&&c===current);
+  current=c; document.getElementById('card').classList.remove('flip'); render(c);
+}
+function render(c){
+  const col=c.color, ink=shade(col,.55);
+  const front=document.getElementById('front'), back=document.getElementById('back');
+  front.style.background=col; back.style.background=col;
+  front.innerHTML=
+    '<div class="tag" style="color:'+ink+'">Regard '+c.cat+'</div>'+
+    '<div class="catn">'+c.catname+'</div>'+
+    '<div class="title">'+c.title+'</div>'+
+    '<div class="rule"></div>'+
+    '<div class="q">'+c.q+'</div>'+
+    '<div class="foot"><span>'+c.code+'</span><span>SCR &middot; Supervision</span></div>';
+  back.innerHTML=
+    '<div class="tag" style="color:'+ink+'">Regard '+c.cat+'</div>'+
+    '<div class="catn">'+c.catname+'</div>'+
+    '<div class="title" style="font-size:19px">'+c.title+'</div>'+
+    '<div class="plabel" style="color:'+ink+'">Pour creuser</div>'+
+    c.pistes.map(p=>'<div class="piste">'+p+'</div>').join('')+
+    '<div class="foot"><span>'+c.code+'</span><span>verso</span></div>';
+}
+function flip(){ if(current)document.getElementById('card').classList.toggle('flip'); }
+renderModes();renderRegards();updateHint();
+</script>
+</body>
+</html>
