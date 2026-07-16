@@ -816,11 +816,13 @@ nav .brand {
 
 .home-main-title {
   font-family: 'DM Serif Display', serif;
-  font-size: 72px;
-  line-height: 1.0;
+  font-size: clamp(32px, 5vw, 72px);
+  line-height: 1.05;
   color: var(--black);
   font-weight: 400;
   margin-bottom: 8px;
+  hyphens: none;
+  word-break: keep-all;
 }
 
 .home-main-title em { color: var(--red); font-style: italic; }
@@ -1108,7 +1110,7 @@ nav .brand {
   <div class="home-page">
     <div class="home-top">
       <div class="home-kicker">Gynécologie-Obstétrique &mdash; Formation postgraduée FMH</div>
-      <h1 class="home-main-title">Super-<br>vision<br><em>Psycho-<br>soma-<br>tique</em></h1>
+      <h1 class="home-main-title">Supervision <em>Psychosomatique</em></h1>
       <p class="home-desc">Un espace pour penser ce que la technique ne peut pas seule contenir. Fiches de travail pour la séance inaugurale.</p>
     </div>
     <div class="home-toc">
