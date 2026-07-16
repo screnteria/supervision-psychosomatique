@@ -3,1756 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supervision Psychosomatique - Fiches Workshop</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<title>Supervision Psychosomatique — Dr Screnteria</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
-
-/* =====================================================
-   BASE - LIGHT, PRINT-READY
-   ===================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
   --black: #0A0A0A;
   --dark: #1C1C1C;
-  --mid: #555555;
-  --light-gray: #ABABAB;
+  --mid: #555;
   --pale: #E8E8E8;
-  --bg: #F7F7F5;
   --white: #FFFFFF;
   --red: #C0281C;
-  --red-light: #E8392B;
-  --red-pale: #FDF0EF;
+  --bg: #F7F7F5;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: #D0D0CE;
+  background: var(--bg);
   color: var(--black);
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-/* NAV - screen only */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: var(--black);
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-nav .brand {
-  font-size: 11px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--light-gray);
-  margin-right: 16px;
-  font-weight: 300;
-}
-
-.nav-btn {
-  background: transparent;
-  border: 1px solid #444;
-  color: #999;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.5px;
-  padding: 5px 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 400;
-}
-
-.nav-btn:hover, .nav-btn.active {
-  background: var(--red);
-  border-color: var(--red);
-  color: var(--white);
-}
-
-/* SCREENS */
-.screen {
-  display: none;
   min-height: 100vh;
-  padding: 70px 0 0;
-  animation: fadeUp 0.35s ease;
-}
-
-.screen.active { display: block; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* PAGE - simulates printed A4 */
-.page {
-  width: 210mm;
-  min-height: 297mm;
-  background: var(--white);
-  margin: 24px auto;
-  padding: 14mm 16mm 14mm 16mm;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-  position: relative;
-  page-break-after: always;
-}
-
-/* PAGE HEADER */
-.page-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 2.5px solid var(--black);
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
 }
 
-.page-num {
-  font-size: 11px;
+.container {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.kicker {
+  font-size: 10px;
+  font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--red);
-  font-weight: 700;
+  margin-bottom: 16px;
+  display: block;
 }
 
-.page-label {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--mid);
-  font-weight: 300;
-}
-
-/* TITLES */
-.h1 {
+.main-title {
   font-family: 'DM Serif Display', serif;
   font-size: 38px;
   line-height: 1.1;
   color: var(--black);
-  font-weight: 400;
-  letter-spacing: -0.5px;
+  margin-bottom: 8px;
 }
 
-.h1 em {
-  font-style: italic;
+.main-title em {
   color: var(--red);
+  font-style: italic;
 }
 
-.h2 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 26px;
-  line-height: 1.15;
-  color: var(--black);
-  font-weight: 400;
-  margin-bottom: 4px;
-}
-
-.h3 {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--black);
-  margin-bottom: 6px;
-}
-
-.subhead {
+.subtitle {
   font-size: 14px;
   color: var(--mid);
   font-weight: 300;
   font-style: italic;
-  margin-bottom: 20px;
+  line-height: 1.5;
 }
 
-/* QUESTION BLOCK - key interactive element */
-.question-block {
-  background: var(--white);
-  color: var(--black);
-  border: 2.5px solid var(--black);
-  border-left: 6px solid var(--red);
-  padding: 14px 18px;
-  margin: 18px 0;
+/* RESOURCES */
+.resources {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 12px;
+  margin-bottom: 40px;
 }
 
-.question-block .q-mark {
-  font-family: 'DM Serif Display', serif;
-  font-size: 36px;
-  line-height: 1;
-  color: var(--red);
-  flex-shrink: 0;
-  margin-top: -4px;
-}
-
-.question-block p {
-  font-size: 15px;
-  font-style: italic;
-  line-height: 1.6;
-  font-weight: 400;
-  color: var(--dark);
-}
-
-/* ANSWER LINES */
-.answer-lines {
-  margin-top: 10px;
-}
-
-.answer-line {
-  border-bottom: 1px solid var(--pale);
-  height: 28px;
-  margin-bottom: 4px;
-}
-
-/* RED RULE - decorative divider */
-.red-rule { width: 36px; height: 3px; background: var(--red); margin: 12px 0; }
-.full-rule { width: 100%; height: 1px; background: var(--pale); margin: 14px 0; }
-
-/* =====================================================
-   VISUEL 1 - MOMENTS CLÉS
-   Grid de situations
-   ===================================================== */
-
-.moments-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin: 16px 0;
-}
-
-.moment-cell {
+.resource-card {
+  background: var(--white);
   border: 1.5px solid var(--pale);
-  padding: 12px 10px;
-  position: relative;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.2s;
 }
 
-.moment-cell.active {
-  border-color: var(--red);
-  background: var(--red-pale);
+.resource-card.unlocked {
+  border-left: 4px solid var(--red);
+  cursor: pointer;
 }
 
-.moment-cell .mc-num {
-  font-size: 10px;
+.resource-card.unlocked:hover {
+  border-color: var(--black);
+  border-left-color: var(--red);
+}
+
+.resource-card.locked {
+  opacity: 0.5;
+}
+
+.resource-info {}
+
+.resource-num {
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: var(--red);
   display: block;
   margin-bottom: 4px;
 }
 
-.moment-cell .mc-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 13px;
-  color: var(--black);
-  margin-bottom: 4px;
-  line-height: 1.3;
-}
-
-.moment-cell .mc-desc {
-  font-size: 11px;
-  color: var(--mid);
-  line-height: 1.4;
-}
-
-.moment-cell .mc-check {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid var(--pale);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.moment-cell:hover .mc-check { border-color: var(--red); }
-.moment-cell.active .mc-check { background: var(--red); border-color: var(--red); color: white; }
-
-/* =====================================================
-   VISUEL 2 - SPECTRE
-   ===================================================== */
-
-.spectrum-wrap {
-  margin: 20px 0;
-}
-
-.spectrum-labels-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.spec-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--mid);
-}
-
-.spec-label.right { text-align: right; }
-
-.spectrum-track {
-  height: 8px;
-  background: linear-gradient(to right, var(--pale), var(--black));
-  position: relative;
-  cursor: pointer;
-  margin-bottom: 4px;
-}
-
-.spec-tick {
-  position: absolute;
-  top: -4px;
-  width: 2px;
-  height: 16px;
-  background: var(--white);
-  pointer-events: none;
-}
-
-.spec-marker {
-  position: absolute;
-  top: -8px;
-  width: 24px;
-  height: 24px;
-  background: var(--red);
-  border: 2px solid var(--white);
-  border-radius: 50%;
-  transform: translateX(-50%);
-  cursor: ew-resize;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  transition: left 0.15s;
-}
-
-.spectrum-zones {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.sz {
-  padding: 12px 10px;
-  border-top: 2px solid;
-}
-
-.sz.left { border-color: var(--light-gray); }
-.sz.center { border-color: var(--black); }
-.sz.right { border-color: var(--red); }
-
-.sz .sz-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.sz.left .sz-label { color: var(--mid); }
-.sz.center .sz-label { color: var(--black); }
-.sz.right .sz-label { color: var(--red); }
-
-.sz p { font-size: 12px; color: var(--dark); line-height: 1.5; }
-
-.posture-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.posture-card {
-  padding: 12px;
-  border-left: 3px solid;
-}
-
-.posture-card.gray { border-color: var(--light-gray); background: #F5F5F5; }
-.posture-card.red { border-color: var(--red); background: var(--red-pale); }
-.posture-card h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
-.posture-card.gray h4 { color: var(--mid); }
-.posture-card.red h4 { color: var(--red); }
-.posture-card p { font-size: 12px; color: var(--dark); line-height: 1.5; }
-
-/* =====================================================
-   VISUEL 3 - MODÈLE BPS
-   Venn diagram simplified for print
-   ===================================================== */
-
-.bps-print {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  margin: 16px 0;
-  border: 1.5px solid var(--black);
-}
-
-.bps-col {
-  padding: 16px 14px;
-  border-right: 1.5px solid var(--black);
-  position: relative;
-}
-
-.bps-col:last-child { border-right: none; }
-
-.bps-col .bps-tag {
-  display: inline-block;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 3px 7px;
-  margin-bottom: 10px;
-}
-
-.bps-col.bio .bps-tag { border: 2px solid var(--black); color: var(--black); background: transparent; }
-.bps-col.psycho .bps-tag { background: var(--red); color: var(--white); }
-.bps-col.social .bps-tag { background: var(--pale); color: var(--black); }
-
-.bps-col .bps-title {
+.resource-title {
   font-family: 'DM Serif Display', serif;
   font-size: 18px;
-  margin-bottom: 10px;
-  line-height: 1.2;
-}
-
-.bps-col ul {
-  list-style: none;
-  padding: 0;
-}
-
-.bps-col ul li {
-  font-size: 12px;
-  color: var(--dark);
-  padding: 4px 0;
-  border-bottom: 1px solid var(--pale);
-  line-height: 1.4;
-}
-
-.bps-col ul li:last-child { border-bottom: none; }
-
-.bps-col ul li::before {
-  content: '—';
-  color: var(--red);
-  margin-right: 6px;
-  font-size: 10px;
-}
-
-.bps-intersection {
-  background: #F2F2F0;
   color: var(--black);
-  padding: 12px 16px;
-  margin-top: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 1.5px solid var(--black);
-  border-top: none;
-}
-
-.bps-intersection .arrow {
-  font-size: 20px;
-  flex-shrink: 0;
-  color: var(--red);
-}
-
-.bps-intersection p {
-  font-size: 13px;
-  font-style: italic;
-  font-family: 'DM Serif Display', serif;
-  color: var(--dark);
-}
-
-/* =====================================================
-   VISUEL 4 - THERMOMÈTRE ÉMOTIONNEL
-   Print: horizontal intensity scale
-   ===================================================== */
-
-.thermo-scale {
-  margin: 16px 0;
-  position: relative;
-}
-
-.thermo-track {
-  height: 24px;
-  background: linear-gradient(to right, var(--pale), #888, var(--dark), var(--red));
-  position: relative;
-  margin-bottom: 32px;
-}
-
-.thermo-notches {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 6px;
-  padding: 0 2px;
-}
-
-.thermo-notch {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.notch-line {
-  width: 1px;
-  height: 8px;
-  background: var(--dark);
-}
-
-.notch-label {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--mid);
-  text-align: center;
-  max-width: 60px;
-  line-height: 1.3;
-}
-
-.thermo-situations {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.thermo-row {
-  display: grid;
-  grid-template-columns: 1fr 120px;
-  gap: 10px;
-  align-items: center;
-  padding: 10px 12px;
-  border-left: 3px solid var(--pale);
-  background: #FAFAFA;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.thermo-row:hover { border-left-color: var(--black); }
-
-.thermo-row.level-5 { border-left-color: var(--red); background: var(--red-pale); }
-.thermo-row.level-4 { border-left-color: #AA2020; }
-.thermo-row.level-3 { border-left-color: #666; }
-
-.thermo-row .tr-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 14px;
   margin-bottom: 3px;
 }
 
-.thermo-row .tr-desc { font-size: 11px; color: var(--mid); line-height: 1.4; }
-
-.intensity-bar-wrap { display: flex; align-items: center; gap: 6px; }
-
-.intensity-bar {
-  height: 8px;
-  background: var(--red);
-  border-radius: 1px;
-  transition: width 0.3s;
-  flex-shrink: 0;
-}
-
-.intensity-num {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--red);
-  white-space: nowrap;
-}
-
-/* =====================================================
-   VISUEL 5 - BOUSSOLE
-   Print: quadrant layout
-   ===================================================== */
-
-.compass-quadrants {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  gap: 0;
-  border: 1.5px solid var(--black);
-  margin: 16px 0;
-  position: relative;
-}
-
-.cq {
-  padding: 16px 14px;
-  border-right: 1.5px solid var(--black);
-  border-bottom: 1.5px solid var(--black);
-  position: relative;
-}
-
-.cq:nth-child(2), .cq:nth-child(4) { border-right: none; }
-.cq:nth-child(3), .cq:nth-child(4) { border-bottom: none; }
-
-.cq-dir {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--red);
-  display: block;
-  margin-bottom: 6px;
-}
-
-.cq-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 18px;
-  margin-bottom: 8px;
-  line-height: 1.2;
-}
-
-.cq p {
+.resource-desc {
   font-size: 12px;
-  color: var(--dark);
-  line-height: 1.6;
-}
-
-.cq.highlighted {
-  background: #F0F0EE;
-  border: 2.5px solid var(--black);
-}
-
-.cq.highlighted .cq-dir { color: var(--red); }
-.cq.highlighted .cq-title { color: var(--black); }
-.cq.highlighted p { color: var(--dark); }
-
-.compass-center-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--white);
-  border: 2px solid var(--black);
-  padding: 8px 12px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  z-index: 5;
-}
-
-/* =====================================================
-   VISUEL 6 - PARCOURS
-   Timeline print version
-   ===================================================== */
-
-.timeline-print {
-  position: relative;
-  padding-left: 32px;
-  margin: 16px 0;
-}
-
-.timeline-line-print {
-  position: absolute;
-  left: 14px;
-  top: 12px;
-  bottom: 12px;
-  width: 2px;
-  background: var(--black);
-}
-
-.tp-step {
-  position: relative;
-  margin-bottom: 20px;
-  padding: 14px 14px 14px 18px;
-  border: 1px solid var(--pale);
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.tp-step:hover { border-color: var(--black); }
-.tp-step:last-child { margin-bottom: 0; }
-
-.tp-dot {
-  position: absolute;
-  left: -32px;
-  top: 14px;
-  width: 28px;
-  height: 28px;
-  background: var(--white);
-  border: 2px solid var(--black);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--black);
-}
-
-.tp-step.highlight .tp-dot { background: var(--red); border-color: var(--red); color: var(--white); }
-.tp-step.highlight { border-color: var(--red); background: var(--red-pale); }
-
-.tp-tag {
-  display: inline-block;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 4px;
-}
-
-.tp-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 17px;
-  margin-bottom: 5px;
-}
-
-.tp-desc { font-size: 12px; color: var(--mid); line-height: 1.55; }
-
-/* =====================================================
-   TABLEAU COMPARATIF
-   ===================================================== */
-
-.comp-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
-  font-size: 12px;
-}
-
-.comp-table th {
-  background: #2E2E2E;
-  color: var(--white);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 10px 12px;
-  text-align: left;
-  border-right: 1px solid #444;
-}
-
-.comp-table th:last-child { border-right: none; }
-
-.comp-table td {
-  padding: 11px 12px;
-  border-bottom: 1px solid var(--pale);
-  border-right: 1px solid var(--pale);
-  vertical-align: top;
-  line-height: 1.55;
-  color: var(--dark);
-}
-
-.comp-table td:last-child { border-right: none; }
-.comp-table tr:last-child td { border-bottom: none; }
-
-.comp-table tr:hover td { background: #F9F9F7; }
-
-.comp-table .espace-name {
-  font-family: 'DM Serif Display', serif;
-  font-size: 14px;
-  color: var(--black);
-  font-style: italic;
-}
-
-.comp-table tr.featured td { background: var(--red-pale); }
-.comp-table tr.featured td:first-child { border-left: 3px solid var(--red); padding-left: 9px; }
-
-.dot-intensity {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 5px;
-  vertical-align: middle;
-}
-
-.dot-black { background: var(--black); }
-.dot-red { background: var(--red); }
-.dot-gray { background: var(--light-gray); }
-
-/* =====================================================
-   HOME PAGE
-   ===================================================== */
-
-.home-page {
-  width: 210mm;
-  min-height: 297mm;
-  background: var(--white);
-  margin: 24px auto;
-  padding: 14mm 16mm;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: var(--black);
-  border-top: 8px solid var(--black);
-}
-
-.home-top {}
-
-.home-kicker {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.home-kicker::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--pale);
-}
-
-.home-main-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 72px;
-  line-height: 1.0;
-  color: var(--black);
-  font-weight: 400;
-  margin-bottom: 8px;
-}
-
-.home-main-title em { color: var(--red); font-style: italic; }
-
-.home-desc {
-  font-size: 15px;
   color: var(--mid);
-  font-weight: 300;
-  max-width: 380px;
-  line-height: 1.6;
-  margin-top: 16px;
-  margin-bottom: 40px;
-  border-left: 3px solid var(--red);
-  padding-left: 12px;
 }
 
-.home-toc {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border: 1.5px solid var(--black);
+.resource-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
 }
 
-.toc-item {
+/* CODE INPUT */
+.code-section {
   background: var(--white);
-  padding: 14px 14px;
+  border: 1.5px solid var(--pale);
+  border-top: 3px solid var(--black);
+  padding: 24px;
+}
+
+.code-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.code-row {
+  display: flex;
+  gap: 8px;
+}
+
+.code-input {
+  flex: 1;
+  border: 1.5px solid var(--pale);
+  padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--black);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 1px;
+}
+
+.code-input:focus { border-color: var(--black); }
+.code-input.error { border-color: var(--red); animation: shake 0.3s ease; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.code-btn {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 12px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  border-right: 1px solid var(--pale);
-  border-bottom: 1px solid var(--pale);
+  white-space: nowrap;
 }
 
-.toc-item:hover { background: #F5F5F5; }
+.code-btn:hover { background: var(--red); }
 
-.toc-num {
-  font-size: 24px;
-  font-family: 'DM Serif Display', serif;
-  color: var(--red);
-  opacity: 0.4;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.toc-text {}
-
-.toc-label {
+.code-msg {
   font-size: 12px;
-  font-weight: 500;
-  color: var(--black);
-  margin-bottom: 2px;
-  line-height: 1.3;
-}
-
-.toc-sub {
-  font-size: 10px;
-  color: var(--light-gray);
-  letter-spacing: 0.5px;
-}
-
-.home-bottom {
-  border-top: 1.5px solid var(--black);
-  padding-top: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 24px;
-}
-
-.home-footer-text {
-  font-size: 11px;
-  color: var(--mid);
-  font-weight: 300;
-  line-height: 1.6;
-}
-
-.home-footer-badge {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--mid);
-  text-align: right;
-}
-
-/* POPUP */
-.popup-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 200;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.popup-overlay.active { display: flex; }
-
-.popup-box {
-  background: var(--white);
-  border-top: 4px solid var(--red);
-  padding: 28px 28px 24px;
-  max-width: 440px;
-  width: 100%;
-  position: relative;
-  animation: fadeUp 0.25s ease;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.25);
-}
-
-.popup-close {
-  position: absolute;
-  top: 12px; right: 12px;
-  background: transparent;
-  border: 1px solid var(--pale);
-  color: var(--mid);
-  width: 26px; height: 26px;
-  cursor: pointer;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.popup-close:hover { background: var(--black); color: var(--white); border-color: var(--black); }
-
-.popup-box h3 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 21px;
-  color: var(--black);
-  margin-bottom: 10px;
-}
-
-.popup-box p { font-size: 14px; color: var(--dark); line-height: 1.7; }
-
-/* =====================================================
-   VISUEL 5 - BA GUA
-   ===================================================== */
-
-.bagua-wrap {
-  margin: 16px 0 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.bagua-row {
-  display: flex;
-  gap: 0;
-}
-
-.bagua-spacer {
-  flex: 1;
-}
-
-.bagua-cell {
-  flex: 2;
-  border: 1.5px solid var(--black);
-  padding: 14px 14px 12px;
-  cursor: pointer;
-  transition: all 0.25s;
-  position: relative;
-  margin: -0.75px;
-}
-
-.bagua-cell:hover { z-index: 2; border-color: var(--red); border-width: 2px; }
-.bagua-cell.open { background: #F7F7F5; border-color: var(--black); border-width: 2px; }
-
-.bagua-elem {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 4px;
-}
-
-.bagua-glyph {
-  font-size: 28px;
-  line-height: 1;
-  margin-bottom: 6px;
-  color: var(--dark);
-}
-
-.bagua-keywords {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--mid);
-  letter-spacing: 0.3px;
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-
-.bagua-text {
-  font-size: 12px;
-  color: var(--dark);
-  line-height: 1.6;
-  margin-bottom: 8px;
-  display: none;
-}
-
-.bagua-cell.open .bagua-text { display: block; }
-
-.bagua-prompt {
-  font-size: 11px;
+  margin-top: 10px;
+  min-height: 16px;
   font-style: italic;
+}
+
+.code-msg.success { color: #2E7D32; }
+.code-msg.error { color: var(--red); }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 11px;
+  color: #AAAAAA;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+/* UNLOCKED BADGE */
+.badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: var(--black);
+  color: var(--white);
+}
+
+.badge.locked-badge {
+  background: var(--pale);
   color: var(--mid);
-  border-top: 1px solid var(--pale);
-  padding-top: 6px;
-  display: none;
 }
-
-.bagua-cell.open .bagua-prompt { display: block; }
-
-.bagua-center-cell {
-  border: 2.5px solid var(--black);
-  background: #F2F2F0;
-}
-
-.bagua-center-cell .bagua-elem { color: var(--black); letter-spacing: 2px; }
-.bagua-center-cell .bagua-glyph { color: var(--black); }
-
-/* Element accent colors on hover */
-.bagua-water:hover, .bagua-water.open { border-color: #3A6B9E; }
-.bagua-water .bagua-elem { color: #3A6B9E; }
-
-.bagua-wood:hover, .bagua-wood.open { border-color: #5A7A3A; }
-.bagua-wood .bagua-elem { color: #5A7A3A; }
-
-.bagua-fire:hover, .bagua-fire.open { border-color: var(--red); }
-.bagua-fire .bagua-elem { color: var(--red); }
-
-.bagua-metal:hover, .bagua-metal.open { border-color: #777; }
-.bagua-metal .bagua-elem { color: #555; }
-
-.bagua-earth .bagua-elem { color: var(--black); }
-
-/* PRINT STYLES */
-@media print {
-  nav, .popup-overlay { display: none !important; }
-  body { background: white; }
-  .screen { display: block !important; padding-top: 0; }
-  .page, .home-page { box-shadow: none; margin: 0; page-break-after: always; }
-  /* Tout le contenu cliquable/masqué devient visible */
-  .bagua-text { display: block !important; }
-  .bagua-prompt { display: block !important; }
-  .bagua-cell { cursor: default; }
-  .bagua-cell:hover { border-color: var(--black) !important; border-width: 1.5px !important; }
-  .bagua-center-cell { border-width: 2.5px !important; }
-  /* Supprimer hint écran */
-  .screen-only { display: none !important; }
-}
-
-</style>
-
-/* INTERACTIVE HOVER */
-.moment-cell { cursor: pointer; transition: all 0.2s; }
-.moment-cell:hover { border-color: var(--black); }
-
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <span class="brand">Supervision Psychosomatique</span>
-  <button class="nav-btn active" onclick="show('home')">Couverture</button>
-  <button class="nav-btn" onclick="show('s1')">01 Moments</button>
-  <button class="nav-btn" onclick="show('s2')">02 Réactions</button>
-  <button class="nav-btn" onclick="show('s3')">03 Modèle BPS</button>
-  <button class="nav-btn" onclick="show('s4')">04 Thermomètre</button>
-  <button class="nav-btn" onclick="show('s5')">05 Boussole</button>
-  <button class="nav-btn" onclick="show('s6')">06 Parcours</button>
-  <button class="nav-btn" onclick="show('stab')">Tableau</button>
-  <button class="nav-btn" style="margin-left:auto; background:#333; border-color:#555; color:#ccc;" onclick="window.print()">⎙ Imprimer</button>
-</nav>
+<div class="container">
 
-
-<!-- HOME -->
-<div id="home" class="screen active">
-  <div class="home-page">
-    <div class="home-top">
-      <div class="home-kicker">Gynécologie-Obstétrique &mdash; Formation postgraduée FMH</div>
-      <h1 class="home-main-title">Super-<br>vision<br><em>Psycho-<br>soma-<br>tique</em></h1>
-      <p class="home-desc">Un espace pour penser ce que la technique ne peut pas seule contenir. Fiches de travail pour la séance inaugurale.</p>
-    </div>
-    <div class="home-toc">
-      <div class="toc-item" onclick="show('s1')">
-        <span class="toc-num">01</span>
-        <div class="toc-text">
-          <div class="toc-label">Les moments qui nous touchent</div>
-          <div class="toc-sub">Carte des situations cliniques</div>
-        </div>
-      </div>
-      <div class="toc-item" onclick="show('s2')">
-        <span class="toc-num">02</span>
-        <div class="toc-text">
-          <div class="toc-label">Le spectre des réactions</div>
-          <div class="toc-sub">Du blindage au débordement</div>
-        </div>
-      </div>
-      <div class="toc-item" onclick="show('s3')">
-        <span class="toc-num">03</span>
-        <div class="toc-text">
-          <div class="toc-label">Le modèle bio-psycho-social</div>
-          <div class="toc-sub">Trois dimensions, une lecture globale</div>
-        </div>
-      </div>
-      <div class="toc-item" onclick="show('s4')">
-        <span class="toc-num">04</span>
-        <div class="toc-text">
-          <div class="toc-label">Le thermomètre émotionnel</div>
-          <div class="toc-sub">Intensité soignante par situation</div>
-        </div>
-      </div>
-      <div class="toc-item" onclick="show('s5')">
-        <span class="toc-num">05</span>
-        <div class="toc-text">
-          <div class="toc-label">La boussole du soignant</div>
-          <div class="toc-sub">Cinq éléments pour trouver son ancrage</div>
-        </div>
-      </div>
-      <div class="toc-item" onclick="show('s6')">
-        <span class="toc-num">06</span>
-        <div class="toc-text">
-          <div class="toc-label">Le parcours de formation</div>
-          <div class="toc-sub">Étapes, exigences FMH, travail final</div>
-        </div>
-      </div>
-      <div class="toc-item" onclick="show('stab')" style="grid-column: span 2;">
-        <span class="toc-num">—</span>
-        <div class="toc-text">
-          <div class="toc-label">Tableau comparatif</div>
-          <div class="toc-sub">Supervision vs débriefing, psychothérapie, CQ, mindfulness</div>
-        </div>
-      </div>
-    </div>
-    <div class="home-bottom">
-      <div class="home-footer-text">
-        Séance inaugurale<br>
-        Groupe restreint &mdash; Espace confidentiel &mdash; Non évaluatif
-      </div>
-      <div class="home-footer-badge">
-        Dr Screnteria<br>Responsable de supervision
-      </div>
-    </div>
+  <div class="header">
+    <span class="kicker">Gynécologie-Obstétrique — Formation postgraduée FMH</span>
+    <h1 class="main-title">Supervision<br><em>Psychosomatique</em></h1>
+    <p class="subtitle">Dr Saira-Christine Screnteria<br>Ressources pédagogiques — Accès progressif</p>
   </div>
-</div>
 
+  <div class="resources" id="resources">
 
-<!-- FICHE 1 : MOMENTS CLÉS -->
-<div id="s1" class="screen">
-  <div class="page">
-    <div class="page-header">
-      <span class="page-num">01 &mdash; Les moments qui nous touchent</span>
-      <span class="page-label">Supervision Psychosomatique</span>
-    </div>
-    <h2 class="h2">La carte des situations cliniques</h2>
-    <p class="subhead">Cochez les situations qui ont laissé une trace récente. Il n'y a pas de bonne réponse.</p>
-
-    <div class="moments-grid">
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">A</span>
-        <div class="mc-title">Deuil périnatal</div>
-        <div class="mc-desc">Fausse couche, mort in utero, IMG</div>
-        <div class="mc-check" id="">&#10003;</div>
+    <div class="resource-card unlocked" id="card-intro" onclick="openResource('intro')">
+      <div class="resource-info">
+        <span class="resource-num">Ressource 01</span>
+        <div class="resource-title">Introduction & fiches de travail</div>
+        <div class="resource-desc">Moments clés · Modèle BPS · Ba Gua · Parcours</div>
       </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">B</span>
-        <div class="mc-title">Interruption de grossesse</div>
-        <div class="mc-desc">Entretien pré-IG, ambivalence, neutralité</div>
-        <div class="mc-check">&#10003;</div>
-      </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">C</span>
-        <div class="mc-title">Violences</div>
-        <div class="mc-desc">Sexuelles, conjugales, révélation en consultation</div>
-        <div class="mc-check">&#10003;</div>
-      </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">D</span>
-        <div class="mc-title">Infertilité &amp; PMA</div>
-        <div class="mc-desc">Désir d'enfant contrarié, transferts, attentes</div>
-        <div class="mc-check">&#10003;</div>
-      </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">E</span>
-        <div class="mc-title">Annonce d'un cancer</div>
-        <div class="mc-desc">Oncologie gynécologique, annonce, suivi</div>
-        <div class="mc-check">&#10003;</div>
-      </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">F</span>
-        <div class="mc-title">Accouchement difficile</div>
-        <div class="mc-desc">Urgences obstétricales, trace émotionnelle post-garde</div>
-        <div class="mc-check">&#10003;</div>
-      </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">G</span>
-        <div class="mc-title">Plaintes sans ancrage organique</div>
-        <div class="mc-desc">Confusion diagnostique, frustration soignante</div>
-        <div class="mc-check">&#10003;</div>
-      </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">H</span>
-        <div class="mc-title">Sexualité &amp; ménopause</div>
-        <div class="mc-desc">Tabous, représentations, écoute sans jugement</div>
-        <div class="mc-check">&#10003;</div>
-      </div>
-      <div class="moment-cell" onclick="toggleCell(this)">
-        <span class="mc-num">I</span>
-        <div class="mc-title">Dynamiques d'équipe</div>
-        <div class="mc-desc">Tensions, rôles, surcharge collective</div>
-        <div class="mc-check">&#10003;</div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
+        <span class="badge">Accès libre</span>
+        <span class="resource-icon">→</span>
       </div>
     </div>
 
-    <div class="question-block">
-      <span class="q-mark">?</span>
-      <p>Parmi ces situations, laquelle résonne le plus pour vous en ce moment - et qu'est-ce qui fait qu'elle "accroche" encore ?</p>
+    <div class="resource-card locked" id="card-cartes">
+      <div class="resource-info">
+        <span class="resource-num">Ressource 02</span>
+        <div class="resource-title">Cartes de supervision</div>
+        <div class="resource-desc">Sept regards sur un cas · Outil de séance</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
+        <span class="badge locked-badge">Code requis</span>
+        <span class="resource-icon">🔒</span>
+      </div>
     </div>
 
-    <div class="answer-lines">
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-    </div>
   </div>
-</div>
 
-
-<!-- FICHE 2 : SPECTRE DES RÉACTIONS -->
-<div id="s2" class="screen">
-  <div class="page">
-    <div class="page-header">
-      <span class="page-num">02 &mdash; Le spectre des réactions soignantes</span>
-      <span class="page-label">Supervision Psychosomatique</span>
+  <div class="code-section">
+    <span class="code-label">Entrer un code d'accès</span>
+    <div class="code-row">
+      <input type="text" class="code-input" id="codeInput"
+        placeholder="code reçu en séance"
+        onkeydown="if(event.key==='Enter') submitCode()">
+      <button class="code-btn" onclick="submitCode()">Déverrouiller</button>
     </div>
-    <h2 class="h2">Du blindage au débordement</h2>
-    <p class="subhead">Marquez d'une croix où vous vous situez habituellement - et dans la situation que vous apportez.</p>
-
-    <div class="spectrum-wrap">
-      <div class="spectrum-labels-row">
-        <span class="spec-label">Blindage</span>
-        <span class="spec-label" style="text-align:center;">Zone juste</span>
-        <span class="spec-label right">Débordement</span>
-      </div>
-      <div class="spectrum-track" onclick="moveMarker(event, 'mk1')">
-        <div class="spec-tick" style="left:33.3%"></div>
-        <div class="spec-tick" style="left:66.6%"></div>
-        <div class="spec-marker" id="mk1" style="left:50%"></div>
-      </div>
-      <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:10px; color:var(--mid); font-style:italic;">
-        <span>Habituellement</span>
-        <span>Positionnez votre croix sur la ligne ci-dessus</span>
-      </div>
-    </div>
-
-    <div class="full-rule" style="margin:20px 0 16px;"></div>
-
-    <div class="spectrum-zones">
-      <div class="sz left">
-        <div class="sz-label">Blindage</div>
-        <p>Se couper pour ne plus ressentir. Efficace à court terme - appauvrissant à long terme. Risque de déshumanisation progressive du soin.</p>
-      </div>
-      <div class="sz center">
-        <div class="sz-label">Zone juste</div>
-        <p>Rester ouvert sans être envahi·e. Présent sans se dissoudre. Une posture qui s'apprend et se cultive - elle n'est pas innée.</p>
-      </div>
-      <div class="sz right">
-        <div class="sz-label">Débordement</div>
-        <p>Quand la frontière entre soi et la patiente devient floue. Le jugement clinique se brouille, l'épuisement s'installe.</p>
-      </div>
-    </div>
-
-    <div class="full-rule"></div>
-
-    <div class="posture-grid">
-      <div class="posture-card gray">
-        <h4>La rigidification</h4>
-        <p>On vous dira peut-être que vous êtes "trop sensible". La réponse instinctive est souvent de s'endurcir. Ce n'est pas la bonne boussole.</p>
-      </div>
-      <div class="posture-card red">
-        <h4>La résonance utile</h4>
-        <p>Ce que vous ressentez dans une consultation - la gorge serrée, l'agacement, le malaise diffus - est une information clinique précieuse.</p>
-      </div>
-      <div class="posture-card gray">
-        <h4>La protection rigide</h4>
-        <p>Les gestes routiniers comme bouclier. La consultation expédiée. La distance clinique devenue froideur. Un signe d'épuisement, pas de solidité.</p>
-      </div>
-      <div class="posture-card red">
-        <h4>La juste limite</h4>
-        <p>Identifier ce qui appartient à la patiente et ce qui vous appartient. Poser des limites sans culpabilité ni rigidité.</p>
-      </div>
-    </div>
-
-    <div class="question-block" style="margin-top:16px;">
-      <span class="q-mark">?</span>
-      <p>Dans quelle direction avez-vous tendance à pencher - et cela varie-t-il selon le type de situation ?</p>
-    </div>
+    <div class="code-msg" id="codeMsg"></div>
   </div>
-</div>
 
-
-<!-- FICHE 3 : MODÈLE BPS -->
-<div id="s3" class="screen">
-  <div class="page">
-    <div class="page-header">
-      <span class="page-num">03 &mdash; Le modèle bio-psycho-social</span>
-      <span class="page-label">Supervision Psychosomatique</span>
-    </div>
-    <h2 class="h2">Trois dimensions, une lecture globale</h2>
-    <p class="subhead">La plainte n'est jamais qu'organique. La souffrance non plus.</p>
-
-    <div class="bps-print">
-      <div class="bps-col bio">
-        <span class="bps-tag">Biologique</span>
-        <div class="bps-title">Le corps<br>qui parle</div>
-        <ul>
-          <li>Symptômes, douleur</li>
-          <li>Hormones, cycle</li>
-          <li>Données génétiques et organiques</li>
-          <li>Somatisations fonctionnelles</li>
-          <li>Effets des traitements</li>
-        </ul>
-      </div>
-      <div class="bps-col psycho">
-        <span class="bps-tag">Psychologique</span>
-        <div class="bps-title">L'histoire<br>qui construit</div>
-        <ul>
-          <li>Vécu, émotions, affects</li>
-          <li>Traumatismes anciens ou récents</li>
-          <li>Représentations du corps</li>
-          <li>Mécanismes de défense</li>
-          <li>Ambivalence, conflit intérieur</li>
-        </ul>
-      </div>
-      <div class="bps-col social">
-        <span class="bps-tag">Social</span>
-        <div class="bps-title">Le contexte<br>qui conditionne</div>
-        <ul>
-          <li>Environnement familial</li>
-          <li>Précarité, migration, violence</li>
-          <li>Réseau de soutien</li>
-          <li>Rôles sociaux et de genre</li>
-          <li>Accès aux soins</li>
-        </ul>
-      </div>
-    </div>
-    <div class="bps-intersection">
-      <span class="arrow">&#8594;</span>
-      <p>La supervision psychosomatique articule ces trois dimensions pour donner sens aux tableaux cliniques complexes et aux réactions soignantes.</p>
-    </div>
-
-    <div class="full-rule"></div>
-
-    <div class="question-block">
-      <span class="q-mark">?</span>
-      <p>Dans la situation que vous apportez : quelle dimension était la plus visible ? Laquelle était la plus silencieuse - et peut-être la plus déterminante ?</p>
-    </div>
-
-    <div class="answer-lines">
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-    </div>
-
-    <div class="full-rule"></div>
-
-    <div style="background:#F5F5F5; padding:14px 16px; border-left: 3px solid var(--black);">
-      <div class="h3" style="margin-bottom:6px;">À retenir pour la supervision</div>
-      <p style="font-size:13px; color:var(--dark); line-height:1.6;">La psychosomatique ne psychologise pas tout. Elle cherche la dimension la moins lisible de la situation pour compléter la lecture clinique. Une plainte fonctionnelle sans explication organique n'est pas une simulation - c'est un défi de compréhension.</p>
-    </div>
+  <div class="footer">
+    Espace confidentiel — Ressources réservées aux participant·es<br>
+    Les codes sont communiqués en séance par Dr Screnteria
   </div>
-</div>
 
-
-<!-- FICHE 4 : THERMOMÈTRE -->
-<div id="s4" class="screen">
-  <div class="page">
-    <div class="page-header">
-      <span class="page-num">04 &mdash; Le thermomètre émotionnel</span>
-      <span class="page-label">Supervision Psychosomatique</span>
-    </div>
-    <h2 class="h2">L'intensité soignante selon les situations</h2>
-    <p class="subhead">Indiquez votre propre niveau pour la situation que vous apportez.</p>
-
-    <div class="thermo-scale">
-      <div class="thermo-track" onclick="moveThermo(event)">
-        <div id="thermoMark" style="position:absolute; top:-6px; left:65%; width:4px; height:36px; background:var(--red); transition:left 0.2s;"></div>
-      </div>
-      <div class="thermo-notches">
-        <div class="thermo-notch"><div class="notch-line"></div><div class="notch-label">Discret</div></div>
-        <div class="thermo-notch"><div class="notch-line"></div><div class="notch-label">Latent</div></div>
-        <div class="thermo-notch"><div class="notch-line"></div><div class="notch-label">Modéré</div></div>
-        <div class="thermo-notch"><div class="notch-line"></div><div class="notch-label">Intense</div></div>
-        <div class="thermo-notch"><div class="notch-line"></div><div class="notch-label">Extrême</div></div>
-      </div>
-    </div>
-
-    <div class="thermo-situations">
-      <div class="thermo-row level-5" onclick="setThermo(92)">
-        <div>
-          <div class="tr-title">Mort in utero, deuil périnatal</div>
-          <div class="tr-desc">La médecine ne peut rien réparer. La présence est tout ce qui reste - et c'est énorme.</div>
-        </div>
-        <div class="intensity-bar-wrap">
-          <div class="intensity-bar" style="width:92px"></div>
-          <span class="intensity-num">92%</span>
-        </div>
-      </div>
-      <div class="thermo-row level-4" onclick="setThermo(78)">
-        <div>
-          <div class="tr-title">Annonce d'un cancer gynécologique</div>
-          <div class="tr-desc">L'information est lourde. Les réactions de la patiente peuvent désarçonner le soignant le plus aguerri.</div>
-        </div>
-        <div class="intensity-bar-wrap">
-          <div class="intensity-bar" style="width:78px"></div>
-          <span class="intensity-num">78%</span>
-        </div>
-      </div>
-      <div class="thermo-row level-3" onclick="setThermo(65)">
-        <div>
-          <div class="tr-title">Révélation de violences sexuelles</div>
-          <div class="tr-desc">Le secret partagé en consultation crée une responsabilité soudaine et une proximité intense.</div>
-        </div>
-        <div class="intensity-bar-wrap">
-          <div class="intensity-bar" style="width:65px"></div>
-          <span class="intensity-num">65%</span>
-        </div>
-      </div>
-      <div class="thermo-row" onclick="setThermo(50)">
-        <div>
-          <div class="tr-title">Entretien pré-IG avec ambivalence</div>
-          <div class="tr-desc">Les mots semblent insuffisants. La neutralité devient une tenue active et exigeante.</div>
-        </div>
-        <div class="intensity-bar-wrap">
-          <div class="intensity-bar" style="width:50px"></div>
-          <span class="intensity-num">50%</span>
-        </div>
-      </div>
-      <div class="thermo-row" onclick="setThermo(35)">
-        <div>
-          <div class="tr-title">Patiente qui déstabilise sans raison apparente</div>
-          <div class="tr-desc">Ce malaise diffus, presque impossible à nommer - souvent le signe d'un transfert actif.</div>
-        </div>
-        <div class="intensity-bar-wrap">
-          <div class="intensity-bar" style="width:35px"></div>
-          <span class="intensity-num">35%</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="question-block" style="margin-top:14px;">
-      <span class="q-mark">?</span>
-      <p>À quel niveau seriez-vous pour la situation que vous apportez aujourd'hui ? Qu'est-ce qui détermine ce niveau ?</p>
-    </div>
-  </div>
-</div>
-
-
-<!-- FICHE 5 : BOUSSOLE BA GUA -->
-<div id="s5" class="screen">
-  <div class="page">
-    <div class="page-header">
-      <span class="page-num">05 &mdash; La boussole intérieure</span>
-      <span class="page-label">Supervision Psychosomatique</span>
-    </div>
-    <h2 class="h2">Cinq éléments pour trouver son ancrage</h2>
-    <p class="subhead">Inspiré du Ba Gua. Chaque élément évoque une manière d'être dans la relation de soin. Où vous reconnaissez-vous ?</p>
-
-    <!-- BA GUA LAYOUT : 4 outer zones + center -->
-    <div class="bagua-wrap">
-
-      <!-- TOP ROW -->
-      <div class="bagua-row bagua-top">
-        <div class="bagua-spacer"></div>
-        <div class="bagua-cell bagua-water" onclick="toggleBagua(this)">
-          <span class="bagua-elem">Eau</span>
-          <div class="bagua-glyph">☵</div>
-          <div class="bagua-keywords">Profondeur &mdash; Introspection &mdash; Ressources cachées</div>
-          <div class="bagua-text">Ce qui coule en dessous. Les émotions non nommées, la fatigue qui s'accumule, les signaux que le corps envoie avant le mental. L'eau ne ment pas - elle trouve toujours son niveau.</div>
-          <div class="bagua-prompt">Ce que je ressens mais ne dis pas encore...</div>
-        </div>
-        <div class="bagua-spacer"></div>
-      </div>
-
-      <!-- MIDDLE ROW -->
-      <div class="bagua-row bagua-middle">
-        <div class="bagua-cell bagua-wood" onclick="toggleBagua(this)">
-          <span class="bagua-elem">Bois</span>
-          <div class="bagua-glyph">☳</div>
-          <div class="bagua-keywords">Élan &mdash; Croissance &mdash; Nouveau départ</div>
-          <div class="bagua-text">Ce qui pousse malgré les obstacles. L'envie d'apprendre, de comprendre autrement, de ne pas rester bloqué·e sur une situation. Le bois s'ajuste à la lumière sans se tordre.</div>
-          <div class="bagua-prompt">Ce qui me donne envie de progresser...</div>
-        </div>
-
-        <div class="bagua-cell bagua-earth bagua-center-cell" onclick="toggleBagua(this)">
-          <span class="bagua-elem">Terre</span>
-          <div class="bagua-glyph">☷</div>
-          <div class="bagua-keywords">Ancrage &mdash; Équilibre &mdash; Centre</div>
-          <div class="bagua-text">Le centre qui relie tout. Savoir pourquoi on ressent ce qu'on ressent. Savoir d'où l'on agit. La supervision est précisément cet espace de retour à la terre - ni emporté·e, ni pétrifié·e.</div>
-          <div class="bagua-prompt">Ce qui me permet de rester moi-même dans le soin...</div>
-        </div>
-
-        <div class="bagua-cell bagua-metal" onclick="toggleBagua(this)">
-          <span class="bagua-elem">Métal</span>
-          <div class="bagua-glyph">☰</div>
-          <div class="bagua-keywords">Précision &mdash; Limite &mdash; Discernement</div>
-          <div class="bagua-text">Ce qui tranche avec clarté. Identifier ce qui appartient à la patiente et ce qui m'appartient. Poser une limite sans dureté. Le métal coupe net - mais il peut aussi protéger.</div>
-          <div class="bagua-prompt">Là où j'ai du mal à poser une limite claire...</div>
-        </div>
-      </div>
-
-      <!-- BOTTOM ROW -->
-      <div class="bagua-row bagua-bottom">
-        <div class="bagua-spacer"></div>
-        <div class="bagua-cell bagua-fire" onclick="toggleBagua(this)">
-          <span class="bagua-elem">Feu</span>
-          <div class="bagua-glyph">☲</div>
-          <div class="bagua-keywords">Présence &mdash; Rayonnement &mdash; Chaleur</div>
-          <div class="bagua-text">Ce qui réchauffe la relation ou ce qui brûle. La présence pleine - ni fuite dans le technique, ni fusion avec la patiente. Le feu éclaire quand il est contenu ; il ravage quand il déborde.</div>
-          <div class="bagua-prompt">Dans quelle situation je me sens le plus présent·e - ou au contraire en train de brûler...</div>
-        </div>
-        <div class="bagua-spacer"></div>
-      </div>
-
-    </div>
-
-    <div class="screen-only" style="font-size:11px; color:var(--light-gray); font-style:italic; text-align:center; margin-top:6px; margin-bottom:4px;">
-      Cliquez sur un élément pour le développer &mdash; sur papier, notez dans l'espace blanc celui qui résonne le plus.
-    </div>
-
-    <div class="question-block" style="margin-top:14px;">
-      <span class="q-mark">?</span>
-      <p>Dans la situation que vous apportez aujourd'hui : quel élément décrit le mieux ce que vous avez vécu - et lequel représente ce vers quoi vous aimeriez aller ?</p>
-    </div>
-
-    <div class="answer-lines">
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- FICHE 6 : PARCOURS -->
-<div id="s6" class="screen">
-  <div class="page">
-    <div class="page-header">
-      <span class="page-num">06 &mdash; Le parcours de supervision</span>
-      <span class="page-label">Supervision Psychosomatique</span>
-    </div>
-    <h2 class="h2">De la première séance au travail de fin de parcours</h2>
-    <p class="subhead">Ce que vous allez vivre, apprendre, développer au fil des séances.</p>
-
-    <div class="timeline-print">
-      <div class="timeline-line-print"></div>
-
-      <div class="tp-step">
-        <div class="tp-dot">1</div>
-        <span class="tp-tag">Aujourd'hui</span>
-        <div class="tp-title">Séance inaugurale</div>
-        <div class="tp-desc">Présentation du cadre : confidentialité absolue, parole libre, absence d'évaluation. Premier partage d'un vécu clinique. Aucune préparation formelle requise - votre vécu suffit.</div>
-      </div>
-
-      <div class="tp-step highlight">
-        <div class="tp-dot" style="color:white;">2-4</div>
-        <span class="tp-tag">Coeur du travail</span>
-        <div class="tp-title">Séances de travail en groupe</div>
-        <div class="tp-desc">Chaque participant·e apporte une situation clinique - pas nécessairement spectaculaire. Le groupe analyse ensemble : qu'est-ce qui appartient à la patiente, au soignant, à la dynamique de relation ? Quels outils la psychosomatique offre-t-elle ici ?</div>
-      </div>
-
-      <div class="tp-step">
-        <div class="tp-dot">+</div>
-        <span class="tp-tag">Processus continu</span>
-        <div class="tp-title">Développement progressif de l'ancrage professionnel</div>
-        <div class="tp-desc">Au fil des séances, quelque chose se déplace. La manière de regarder une consultation change. On commence à repérer les signaux - dans la relation, dans son propre corps. Ce n'est pas de la psychothérapie : c'est de la formation clinique.</div>
-      </div>
-
-      <div class="tp-step">
-        <div class="tp-dot" style="font-size:16px;">&#10022;</div>
-        <span class="tp-tag">Exigence FMH officielle</span>
-        <div class="tp-title">Travail personnel de fin de parcours</div>
-        <div class="tp-desc">Description d'un cas clinique où vous avez mis en pratique les réflexions développées en supervision. Ce travail n'est pas une évaluation académique - c'est une trace de votre propre évolution. Un miroir du chemin parcouru. Requis par le programme de formation postgraduée SIWF/ISFM Gynécologie-Obstétrique (rév. 2022).</div>
-      </div>
-    </div>
-
-    <div class="question-block">
-      <span class="q-mark">?</span>
-      <p>Qu'est-ce que vous espérez trouver dans cet espace de supervision - et qu'est-ce qui vous paraît le plus flou ou incertain pour l'instant ?</p>
-    </div>
-
-    <div class="answer-lines">
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-      <div class="answer-line"></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- TABLEAU -->
-<div id="stab" class="screen">
-  <div class="page">
-    <div class="page-header">
-      <span class="page-num">Tableau &mdash; Supervision et autres espaces de parole</span>
-      <span class="page-label">Supervision Psychosomatique</span>
-    </div>
-    <h2 class="h2">Ce que la supervision est - et n'est pas</h2>
-    <p class="subhead">Pour situer clairement notre espace parmi les autres dispositifs existants.</p>
-
-    <table class="comp-table">
-      <thead>
-        <tr>
-          <th style="width:18%">Espace</th>
-          <th style="width:28%">Ce qu'on y fait</th>
-          <th style="width:28%">Ce qu'on y apprend</th>
-          <th style="width:14%">Intensité</th>
-          <th style="width:12%">Cadre</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="featured">
-          <td><span class="espace-name">Supervision psychosomatique</span></td>
-          <td>Réfléchir à la relation de soin, décoder ses réactions, développer son ancrage dans la relation de soin</td>
-          <td>Juste distance, lecture globale BPS, gestion des situations cliniques complexes</td>
-          <td><span class="dot-intensity dot-black"></span>Modérée à soutenue</td>
-          <td>Collectif, clinique, confidentiel</td>
-        </tr>
-        <tr>
-          <td><span class="espace-name">Débriefing post-incident</span></td>
-          <td>Revenir sur les faits après un événement critique, décompresser en équipe</td>
-          <td>Gestion de l'immédiat, cohésion d'équipe, réduction du stress aigu</td>
-          <td><span class="dot-intensity dot-red"></span>Ponctuelle, intense</td>
-          <td>Collectif, factuel, situationnel</td>
-        </tr>
-        <tr>
-          <td><span class="espace-name">Psychothérapie personnelle</span></td>
-          <td>Travailler son histoire personnelle, ses dynamiques internes, ses blessures</td>
-          <td>Développement personnel, résolution de conflits internes, identité</td>
-          <td><span class="dot-intensity dot-red"></span>Profonde, durable</td>
-          <td>Individuel, privé, séparé du cadre professionnel</td>
-        </tr>
-        <tr>
-          <td><span class="espace-name">Cercle de qualité (CQ)</span></td>
-          <td>Analyser les pratiques cliniques, améliorer les processus et protocoles en équipe</td>
-          <td>Qualité des soins, travail d'équipe, homogénéisation des pratiques</td>
-          <td><span class="dot-intensity dot-gray"></span>Organisationnelle</td>
-          <td>Collectif, axé sur les pratiques</td>
-        </tr>
-        <tr>
-          <td><span class="espace-name">Mindfulness / gestion du stress</span></td>
-          <td>Réguler son niveau de stress, développer la présence et l'attention au quotidien</td>
-          <td>Bien-être personnel, résilience individuelle, conscience corporelle</td>
-          <td><span class="dot-intensity dot-gray"></span>Douce, régulière</td>
-          <td>Individuel, praticable en autonomie</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="full-rule"></div>
-
-    <div style="background:#F5F5F5; padding:14px 16px; border-left:3px solid var(--black); margin-bottom:14px;">
-      <p style="font-size:13px; color:var(--dark); line-height:1.65;">La supervision ne remplace aucun de ces espaces - elle les complète. Ce qui la distingue : elle travaille précisément à l'intersection du soin, de la relation et de l'identité professionnelle, dans un cadre collectif et non évaluatif. Elle appartient à votre formation clinique.</p>
-    </div>
-
-    <div class="question-block">
-      <span class="q-mark">?</span>
-      <p>Lequel de ces espaces vous est déjà familier - et lequel vous paraît le plus nouveau ? Qu'est-ce que cela vous dit de votre propre manière de prendre soin de vous en tant que soignant·e ?</p>
-    </div>
-  </div>
-</div>
-
-
-<!-- POPUP -->
-<div class="popup-overlay" id="popup" onclick="closePopup(event)">
-  <div class="popup-box">
-    <button class="popup-close" onclick="document.getElementById('popup').classList.remove('active')">&#x2715;</button>
-    <h3 id="pTitle"></h3>
-    <p id="pText"></p>
-  </div>
 </div>
 
 <script>
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  const ids = ['home','s1','s2','s3','s4','s5','s6','stab'];
-  const idx = ids.indexOf(id);
-  document.querySelectorAll('.nav-btn')[idx].classList.add('active');
-  window.scrollTo(0, 0);
-}
+  // CODES - à modifier librement
+  const CODES = {
+    'cartes':    { resource: 'cartes',    label: 'Cartes de supervision' },
+    'supervision25': { resource: 'cartes', label: 'Cartes de supervision' },
+  };
 
-function toggleCell(el) {
-  el.classList.toggle('active');
-}
+  // Resources URLs - fichiers dans le même dossier GitHub
+  const URLS = {
+    'intro':  'supervision_workshop_print.html',
+    'cartes': 'Cartes_supervision_deck.html',
+  };
 
-function moveMarker(e, id) {
-  const track = e.currentTarget;
-  const rect = track.getBoundingClientRect();
-  const pct = Math.max(2, Math.min(98, ((e.clientX - rect.left) / rect.width) * 100));
-  document.getElementById(id).style.left = pct + '%';
-}
-
-function moveThermo(e) {
-  const track = e.currentTarget;
-  const rect = track.getBoundingClientRect();
-  const pct = Math.max(2, Math.min(98, ((e.clientX - rect.left) / rect.width) * 100));
-  document.getElementById('thermoMark').style.left = pct + '%';
-}
-
-function setThermo(val) {
-  document.getElementById('thermoMark').style.left = val + '%';
-}
-
-function toggleBagua(el) {
-  el.classList.toggle('open');
-}
-
-function closePopup(e) {
-  if (e.target === document.getElementById('popup')) {
-    document.getElementById('popup').classList.remove('active');
+  // Check localStorage for previously unlocked resources
+  function getUnlocked() {
+    try { return JSON.parse(localStorage.getItem('unlocked') || '[]'); }
+    catch(e) { return []; }
   }
-}
+
+  function saveUnlocked(resource) {
+    const list = getUnlocked();
+    if (!list.includes(resource)) {
+      list.push(resource);
+      localStorage.setItem('unlocked', JSON.stringify(list));
+    }
+  }
+
+  function openResource(key) {
+    window.open(URLS[key], '_blank');
+  }
+
+  function unlockCard(resource, label) {
+    const card = document.getElementById('card-' + resource);
+    if (!card) return;
+    card.classList.remove('locked');
+    card.classList.add('unlocked');
+    card.onclick = () => openResource(resource);
+    card.querySelector('.badge').textContent = 'Déverrouillé';
+    card.querySelector('.badge').classList.remove('locked-badge');
+    card.querySelector('.resource-icon').textContent = '→';
+    saveUnlocked(resource);
+  }
+
+  function submitCode() {
+    const input = document.getElementById('codeInput');
+    const msg = document.getElementById('codeMsg');
+    const code = input.value.trim().toLowerCase();
+
+    if (!code) return;
+
+    if (CODES[code]) {
+      const { resource, label } = CODES[code];
+      unlockCard(resource, label);
+      msg.textContent = '✓ ' + label + ' déverrouillé.';
+      msg.className = 'code-msg success';
+      input.value = '';
+    } else {
+      msg.textContent = 'Code incorrect. Vérifiez avec Dr Screnteria.';
+      msg.className = 'code-msg error';
+      input.classList.add('error');
+      setTimeout(() => input.classList.remove('error'), 400);
+    }
+  }
+
+  // Restore previously unlocked resources on load
+  window.addEventListener('load', () => {
+    getUnlocked().forEach(r => {
+      if (CODES[Object.keys(CODES).find(k => CODES[k].resource === r)]) {
+        unlockCard(r, '');
+      } else {
+        unlockCard(r, '');
+      }
+    });
+  });
 </script>
 </body>
 </html>
