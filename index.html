@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supervision Psychosomatique — Dr Screnteria</title>
+<title>Supervision Psychosomatique · Dr Renteria · v2026-07-24</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -219,7 +219,7 @@ body {
   line-height: 1.8;
 }
 
-/* UNLOCKED BADGE */
+/* BADGE */
 .badge {
   display: inline-block;
   font-size: 9px;
@@ -242,18 +242,18 @@ body {
 <div class="container">
 
   <div class="header">
-    <span class="kicker">Gynécologie-Obstétrique — Formation postgraduée FMH</span>
+    <span class="kicker">Gynécologie-Obstétrique · Formation postgraduée FMH</span>
     <h1 class="main-title">Supervision<br><em>Psychosomatique</em></h1>
-    <p class="subtitle">Dr Saira-Christine Screnteria<br>Ressources pédagogiques — Accès progressif</p>
+    <p class="subtitle">Dr Saira-Christine Renteria<br>Ressources pédagogiques · Accès progressif</p>
   </div>
 
   <div class="resources" id="resources">
 
-    <div class="resource-card unlocked" id="card-intro" onclick="openResource('intro')">
+    <div class="resource-card unlocked" id="card-inscription" onclick="openResource('inscription')">
       <div class="resource-info">
         <span class="resource-num">Ressource 01</span>
-        <div class="resource-title">Introduction & fiches de travail</div>
-        <div class="resource-desc">Moments clés · Modèle BPS · Ba Gua · Parcours</div>
+        <div class="resource-title">Inscription</div>
+        <div class="resource-desc">Formulaire à remplir · Délais · Coûts · Contacts</div>
       </div>
       <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
         <span class="badge">Accès libre</span>
@@ -261,9 +261,21 @@ body {
       </div>
     </div>
 
-    <div class="resource-card locked" id="card-cartes">
+    <div class="resource-card locked" id="card-intro">
       <div class="resource-info">
         <span class="resource-num">Ressource 02</span>
+        <div class="resource-title">Introduction & fiches de travail</div>
+        <div class="resource-desc">Moments clés · Modèle BPS · Ba Gua · Parcours</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
+        <span class="badge locked-badge">Code requis</span>
+        <span class="resource-icon">🔒</span>
+      </div>
+    </div>
+
+    <div class="resource-card locked" id="card-cartes">
+      <div class="resource-info">
+        <span class="resource-num">Ressource 03</span>
         <div class="resource-title">Cartes de supervision</div>
         <div class="resource-desc">Sept regards sur un cas · Outil de séance</div>
       </div>
@@ -279,7 +291,7 @@ body {
     <span class="code-label">Entrer un code d'accès</span>
     <div class="code-row">
       <input type="text" class="code-input" id="codeInput"
-        placeholder="code reçu en séance"
+        placeholder="votre code d'accès"
         onkeydown="if(event.key==='Enter') submitCode()">
       <button class="code-btn" onclick="submitCode()">Déverrouiller</button>
     </div>
@@ -287,26 +299,33 @@ body {
   </div>
 
   <div class="footer">
-    Espace confidentiel — Ressources réservées aux participant·es<br>
-    Les codes sont communiqués en séance par Dr Screnteria
+    Espace confidentiel · Ressources réservées aux participant·es<br>
+    Les codes sont communiqués par Dr Renteria<br>
+    <span style="opacity:0.65;">Version 2026-07-24</span>
   </div>
 
 </div>
 
 <script>
-  // CODES - à modifier librement
+  // CODES - à modifier librement.
+  // resource = quelle ressource le code déverrouille (intro ou cartes).
   const CODES = {
-    'cartes':    { resource: 'cartes',    label: 'Cartes de supervision' },
+    'fiches':        { resource: 'intro',  label: 'Introduction & fiches de travail' },
+    'introduction':  { resource: 'intro',  label: 'Introduction & fiches de travail' },
+    'cartes':        { resource: 'cartes', label: 'Cartes de supervision' },
     'supervision25': { resource: 'cartes', label: 'Cartes de supervision' },
   };
 
-  // Resources URLs - fichiers dans le même dossier GitHub
+  // Fichiers dans le même dossier.
   const URLS = {
-    'intro':  'supervision_workshop_print.html',
-    'cartes': 'Cartes_supervision_deck.html',
+    'inscription': 'inscription.html',
+    'intro':       'supervision_workshop_print.html',
+    'cartes':      'Cartes_supervision_deck.html',
   };
 
-  // Check localStorage for previously unlocked resources
+  // L'inscription est toujours en accès libre: pas de code, jamais verrouillée.
+  const ALWAYS_OPEN = ['inscription'];
+
   function getUnlocked() {
     try { return JSON.parse(localStorage.getItem('unlocked') || '[]'); }
     catch(e) { return []; }
@@ -324,15 +343,16 @@ body {
     window.open(URLS[key], '_blank');
   }
 
-  function unlockCard(resource, label) {
+  function unlockCard(resource) {
     const card = document.getElementById('card-' + resource);
     if (!card) return;
     card.classList.remove('locked');
     card.classList.add('unlocked');
     card.onclick = () => openResource(resource);
-    card.querySelector('.badge').textContent = 'Déverrouillé';
-    card.querySelector('.badge').classList.remove('locked-badge');
-    card.querySelector('.resource-icon').textContent = '→';
+    const badge = card.querySelector('.badge');
+    if (badge) { badge.textContent = 'Déverrouillé'; badge.classList.remove('locked-badge'); }
+    const icon = card.querySelector('.resource-icon');
+    if (icon) icon.textContent = '→';
     saveUnlocked(resource);
   }
 
@@ -345,26 +365,23 @@ body {
 
     if (CODES[code]) {
       const { resource, label } = CODES[code];
-      unlockCard(resource, label);
+      unlockCard(resource);
       msg.textContent = '✓ ' + label + ' déverrouillé.';
       msg.className = 'code-msg success';
       input.value = '';
     } else {
-      msg.textContent = 'Code incorrect. Vérifiez avec Dr Screnteria.';
+      msg.textContent = 'Code incorrect. Vérifiez avec Dr Renteria.';
       msg.className = 'code-msg error';
       input.classList.add('error');
       setTimeout(() => input.classList.remove('error'), 400);
     }
   }
 
-  // Restore previously unlocked resources on load
+  // Restaurer les ressources déjà déverrouillées.
   window.addEventListener('load', () => {
     getUnlocked().forEach(r => {
-      if (CODES[Object.keys(CODES).find(k => CODES[k].resource === r)]) {
-        unlockCard(r, '');
-      } else {
-        unlockCard(r, '');
-      }
+      if (ALWAYS_OPEN.includes(r)) return;
+      unlockCard(r);
     });
   });
 </script>
