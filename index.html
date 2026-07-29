@@ -338,18 +338,9 @@ body {
   // La note d'information est en accès libre: pas de code, jamais verrouillée.
   const ALWAYS_OPEN = ['note'];
 
-  function getUnlocked() {
-    try { return JSON.parse(localStorage.getItem('unlocked') || '[]'); }
-    catch(e) { return []; }
-  }
-
-  function saveUnlocked(resource) {
-    const list = getUnlocked();
-    if (!list.includes(resource)) {
-      list.push(resource);
-      localStorage.setItem('unlocked', JSON.stringify(list));
-    }
-  }
+  // Aucune memoire du deverrouillage: le code vaut pour la visite en cours.
+  // Un rechargement de la page reverrouille les ressources.
+  function saveUnlocked(resource) { /* volontairement sans effet */ }
 
   function openResource(key) {
     window.open(URLS[key], '_blank');
@@ -389,13 +380,6 @@ body {
     }
   }
 
-  // Restaurer les ressources déjà déverrouillées.
-  window.addEventListener('load', () => {
-    getUnlocked().forEach(r => {
-      if (ALWAYS_OPEN.includes(r)) return;
-      unlockCard(r);
-    });
-  });
 </script>
 </body>
 </html>
