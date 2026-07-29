@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supervision Psychosomatique · Dr Renteria · v2026-07-24</title>
+<title>Supervision Psychosomatique · Dr Renteria · v2026-07-29</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -249,15 +249,15 @@ body {
 
   <div class="resources" id="resources">
 
-    <div class="resource-card unlocked" id="card-inscription" onclick="openResource('inscription')">
+    <div class="resource-card unlocked" id="card-note" onclick="openResource('note')">
       <div class="resource-info">
         <span class="resource-num">Ressource 01</span>
-        <div class="resource-title">Inscription</div>
-        <div class="resource-desc">Formulaire à remplir · Délais · Coûts · Contacts</div>
+        <div class="resource-title">Note d'information</div>
+        <div class="resource-desc">Pourquoi la supervision &middot; Cadre &middot; Ce qu'elle permet d'apprendre &middot; PDF</div>
       </div>
       <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;">
-        <span class="badge">Accès libre</span>
-        <span class="resource-icon">→</span>
+        <span class="badge">Acc&egrave;s libre</span>
+        <span class="resource-icon">&rarr;</span>
       </div>
     </div>
 
@@ -301,12 +301,24 @@ body {
   <div class="footer">
     Espace confidentiel · Ressources réservées aux participant·es<br>
     Les codes sont communiqués par Dr Renteria<br>
-    <span style="opacity:0.65;">Version 2026-07-24</span>
+    <span style="opacity:0.65;">Version 2026-07-29</span>
   </div>
 
 </div>
 
 <script>
+  /* ----------------------------------------------------------------
+     AJOUTER UNE RESSOURCE - trois endroits, dans cet ordre.
+
+     1. Dans le corps de la page, dupliquer un bloc <div class="resource-card locked">
+        et changer son id (card-xxx), son numero (Ressource 03, 04...), son titre
+        et sa description.
+     2. Ci-dessous dans URLS, ajouter la ligne  'xxx': 'nom-du-fichier.html',
+     3. Ci-dessous dans CODES, ajouter au moins un code qui ouvre 'xxx'.
+
+     L'id de la carte doit s'ecrire card-xxx, avec le meme xxx que dans URLS.
+     ---------------------------------------------------------------- */
+
   // CODES - à modifier librement.
   // resource = quelle ressource le code déverrouille (intro ou cartes).
   const CODES = {
@@ -318,13 +330,13 @@ body {
 
   // Fichiers dans le même dossier.
   const URLS = {
-    'inscription': 'inscription.html',
+    'note':        'Note-information-supervision-psychosomatique.pdf',
     'intro':       'supervision_workshop_print.html',
     'cartes':      'Cartes_supervision_deck.html',
   };
 
-  // L'inscription est toujours en accès libre: pas de code, jamais verrouillée.
-  const ALWAYS_OPEN = ['inscription'];
+  // La note d'information est en accès libre: pas de code, jamais verrouillée.
+  const ALWAYS_OPEN = ['note'];
 
   function getUnlocked() {
     try { return JSON.parse(localStorage.getItem('unlocked') || '[]'); }
