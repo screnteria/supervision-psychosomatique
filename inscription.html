@@ -328,6 +328,7 @@ textarea.f-input { resize: vertical; min-height: 58px; line-height: 1.5; }
 
 <div class="container">
 
+
   <div class="header">
     <span class="kicker">Gynécologie-Obstétrique · Formation postgraduée FMH</span>
     <h1 class="main-title">Inscription à la <em>supervision psychosomatique</em></h1>
@@ -402,8 +403,7 @@ textarea.f-input { resize: vertical; min-height: 58px; line-height: 1.5; }
 
     <div class="field row2">
       <div>
-        <label class="f-label" for="cpLieu">CP / lieu</label>
-        <input class="f-input" id="cpLieu" type="text">
+        <label class="f-label" for="cpLieu">CP et localité</label><input class="f-input" id="cpLieu" type="text" placeholder="1090 La Croix-sur-Lutry">
       </div>
       <div>
         <label class="f-label" for="telephone">Téléphone</label>
@@ -600,12 +600,7 @@ function lireChamps() {
   };
 }
 
-function champsManquants(c) {
-  var manque = [];
-  if (!c.nomPrenom) manque.push('Nom / prénom');
-  if (!c.email) manque.push('E-mail');
-  return manque;
-}
+function champsManquants(c) { var manque = []; if (!c.nomPrenom) manque.push('Nom / prénom'); if (!c.email) manque.push('E-mail'); if (c.cpLieu && /^\s*\d{4}\s*$/.test(c.cpLieu)) manque.push('la localité'); return manque; }
 
 function envoyer() {
   var c = lireChamps();
@@ -665,6 +660,76 @@ function ligne(label, val) {
   return '<div class="prow"><div class="plabel">' + esc(label) + '</div><div class="pval">' + (val ? esc(val) : '&nbsp;') + '</div></div>';
 }
 
+/* ============================================================
+   Generateur de PDF conforme au formulaire de Bale.
+   Sans bibliotheque externe: le PDF est assemble a la main.
+   Geometrie relevee sur le formulaire officiel (mm, depuis le bas).
+   ============================================================ */
+
+var LOGO_W = 288, LOGO_H = 95;
+var LOGO_HEX = 'ffffff87ffffffe0ff87fe3ffffc7fffffffffffff8fffe30ffffffffffffff87ffffff8ffffff87ffffffe0ff87fe3ffffc7fffffffffffff8fffe30ffffffffffffff87ffffff8ffffff87ffffffe0ff87fe3ffffc7fffffffffffff8fffe30ffffffffffffff87ffffff8ffffff87ffffffe0ff87fe3fffffffffffffffffffff8fffffcffffffffffffffc7ffff8ffbfff87ffffffe0ff87fe3fffffffffffffffffffff8fffff8ffffffffffffff87ffff8ff1fff87ffffffe0ff87fe3fffffffffffffffffffff8fffff8ffffffffffffff87ffff8fe0fff87ffffffe0ff87fe3ce1fc63fc7c1fce7c1f8e01f03e01f03fc0fce1fce01f81f8fe07ff87ffffffe0ff87fe38407c63fc70078430078c01e00e00e01f0078807c600e00f8fe03ff87ffffffe0ff87fe38003c61f861c38021c78c01c78e01c70f1c38183c600e3878ff01ff87ffffffe0ff87fe383c3c71f8c3e381e3e38f8fc7878f878e3e383e3c787c3c78ff80ff87ffffffe0ff87fe387e3c70f8c7e3c3e3e38f8fcfc78f87ce3e387e1c787e7c38ffc07f87ffffffe0ff87fe387e3c70f9c7f1c7e1ff8f8fffc78f87fe1ff87e1c787ffc38ffe03f87ffffffe0ff87fe387e3c78f18001c7e03f8f8ff0078fc07f01f8ff1c787f0038fff01f87ffffffe0ff87fe387e3c78718001c7f8078f8fc0078fe01f8078ff1c787c0038fff80f87ffffffe0ffc7fe387e3c7c6387ffc7ff838f8f8fc78ffe07f838ff1c78787c38fffc0787ffffffe0ffc7fc387e3c7c63c7ffc7ffe38f8f8fc78fff87fe187e1c7878fc38fffe0387ffffffe0ffc3fc787e3c7e27c7e1c7c3e38f8f0f878f8fc63e187e3c7878fc38ffff0187ffffffe0ffe1f8787e3c7e07c3e3c7c3e38f8f8f878787863e187c3c78787838ffff8187ffffffe0ffe000f87e3c7e07e1c3c7e1c38f81870780c70e1c38183c7c083038ffffc387ffffffe0fff001f87e3c7f0ff00787f0078f81c047c0c01f0078807c7c0c0238ffffe787ffffffe0fffc07fcfe3c7f9ffc1fcff81f8fe1e0e7e1f03fc1f8e1fcfe1f0e78ffffff87ffffffe0fffffffffffffffffffffffffffffffffffffffffff8ffffffffffffffffff87ffffffe0fffffffffffffffffffffffffffffffffffffffffff8ffffffffffff00000f87e00003e0fffffffffffffffffffffffffffffffffffffffffff8ffffffffffff00001f87e00003e0fffffffffffffffffffffffffffffffffffffffffff8ffffffffffff00001f87e00003e0fffffffffffffffffffffffffffffffffffffffffff8ffffffffffff00000f87e00003e0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff87ffffffe0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff87ffffffe0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe787ffffffe0ffc01ffffffffffffe7fffffffffffffffffffffffffffffffffffffffffc387ffffffe0ff8003fffffffffffe3fffffffffffffffffffffffffffffffffffffffff8187ffffffe0ff8001fffffffffffe3fffffffffffffffffffffffffffffffffffffffff0187ffffffe0ff87e1fffffffffffe3ffffffffffffffffffffffffffffffffffffffffe0387ffffffe0ff87f0fffffffffffe3ffffffffffffffffffffffffffffffffffffffffc0787ffffffe0ff87f0fffffffffffe3ffffffffffffffffffffffffffffffffffffffff80f87ffffffe0ff87f0fe1ff87ff1fe3ffffffffffffffffffffffffffffffffffffffff01f87ffffffe0ff87f1f807e01f807e3fffffffffffffffffffffffffffffffffffffffe03f87ffffffe0ff87e1f0c3c30f043e3fffffffffffffffffffffffffffffffffffffffc07f87ffffffe0ff8003e1e3878f1f1e3fffffffffffffffffffffffffffffffffffffff80ff87ffffffe0ff8007e3f18f8e3f1e3fffffffffffffffffffffffffffffffffffffff01ff87ffffffe0ff8001fff187fe3f8e3ffffffffffffffffffffffffffffffffffffffe03ff87ffffffe0ff87f0f801c07e000e3ffffffffffffffffffffffffffffffffffffffe07ff87ffffffe0ff87f8e001e01c000e3ffffffffffffffffffffffffffffffffffffffe0fff87ffffffe0ff87f8e1f1fc0e3ffe3fffffffffffffffffffffffffffffffffffffff1fff87ffffffe0ff87f8c3f1ff863ffe3fffffffffffffffffffffffffffffffffffffffffff87ffffffe0ff87f0c7e18f863f8e3fffffffffffffffffffffffffffffffffffffffffff87ffffffe0ff87e0c3e18f861f0e3fffffffffffffffffffffffffffffffffffffffffff87ffffffe0ff8001c1c1878f0e1e3fffffffffffffffffffffffffffffffffffffffffff87ffffffe0ff8003e011c00f803e3fffffffffffffffffffffffffffffffffffffffffff87fffffff0ffc00ff031f03fc0fe3fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc03ffffffffffffffdff9effffbeffffffffffffffffffffffffffffffffffffffffffff801ffffffffffffff8ff1c7fff1c7fffffffffffffffffffffffffffffffffffffffffff801ffffffffffffff8ff9c7fff1c7fffffffffffffffffffffffffffffffffffffffffff8ffffffffffffffff8ff9ffffffc7fffffffffffffffffffffffffffffffffffffffffff8fffdf1fffff1ffcf8ff9fff9ffc7fffffffffffffffffffffffffffffffffffffffffff8ffc0c078f3c078038c39c70071c61ffffffffffffffffffffffffffffffffffffffffff803c08638f38638638879c70c71c47ffffffffffffffffffffffffffffffffffffffffff803c7ce38f38f38e380f9c71e31c07ffffffffffffffffffffffffffffffffffffffffff803cffc38f38f38f381f9c71e31c0fffffffffffffffffffffffffffffffffffffffffff8ffcfc038f38038f380f9c71e31c0fffffffffffffffffffffffffffffffffffffffffff8ffcf8638f38038f380f9c71e31c07ffffffffffffffffffffffffffffffffffffffffff8ffcf8e38f38ff8f38c79c71e31c63ffffffffffffffffffffffffffffffffffffffffff8ffcf8e38e38e38f38c79c71e31c63ffffffffffffffffffffffffffffffffffffffffff8ffcf803803c038f38e31c71e31c71ffffffffffffffffffffffffffffffffffffffffff8ffcfc13c13e078f38f31c71e31c71ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
+
+function pdfEscape(s) {
+  var out = '';
+  for (var i = 0; i < s.length; i++) {
+    var ch = s.charAt(i), code = s.charCodeAt(i);
+    if (ch === '(' || ch === ')' || ch === '\\') out += '\\' + ch;
+    else if (code < 32) out += ' ';
+    else if (code < 127) out += ch;
+    else if (code < 256) out += '\\' + ('000' + code.toString(8)).slice(-3);
+    else {
+      var map = { 'Œ': 'OE', 'œ': 'oe', '’': "'", '‘': "'", '“': '"', '”': '"', '–': '-', '—': '-', '…': '...' };
+      out += map[ch] || '?';
+    }
+  }
+  return out;
+}
+
+var HELV_W = null;
+function largeurTexte(txt, size, bold) {
+  if (!HELV_W) {
+    HELV_W = { n: {}, b: {} };
+    var cv = document.createElement('canvas');
+    var cx = cv.getContext('2d');
+    for (var f = 0; f < 2; f++) {
+      cx.font = (f ? 'bold ' : '') + '1000px Helvetica, Arial, sans-serif';
+      var t = f ? HELV_W.b : HELV_W.n;
+      for (var c = 32; c < 256; c++) t[c] = cx.measureText(String.fromCharCode(c)).width / 1000;
+    }
+  }
+  var tab = bold ? HELV_W.b : HELV_W.n, tot = 0;
+  for (var i = 0; i < txt.length; i++) {
+    var code = txt.charCodeAt(i);
+    tot += (tab[code] !== undefined ? tab[code] : 0.55);
+  }
+  return tot * size * 25.4 / 72;   // en mm
+}
+
+function canvasVersMasque(cv) {
+  var ctx = cv.getContext('2d');
+  var w = cv.width, h = cv.height;
+  var d = ctx.getImageData(0, 0, w, h).data;
+  var rb = (w + 7) >> 3;
+  var out = new Uint8Array(rb * h);
+  for (var i = 0; i < out.length; i++) out[i] = 0xFF;
+  var minX = w, maxX = -1, minY = h, maxY = -1;
+  for (var y = 0; y < h; y++) {
+    for (var x = 0; x < w; x++) {
+      var p = (y * w + x) * 4;
+      if (d[p + 3] > 40 && (d[p] + d[p + 1] + d[p + 2]) / 3 < 190) {
+        out[y * rb + (x >> 3)] &= ~(0x80 >> (x & 7));
+        if (x < minX) minX = x; if (x > maxX) maxX = x;
+        if (y < minY) minY = y; if (y > maxY) maxY = y;
+      }
+    }
+  }
+  if (maxX < 0) return null;
+  var hex = '';
+  var hx = '0123456789abcdef';
+  for (var k = 0; k < out.length; k++) hex += hx[out[k] >> 4] + hx[out[k] & 15];
+  return { w: w, h: h, hex: hex, box: { x0: minX, x1: maxX, y0: minY, y1: maxY } };
+}
+
 function genererPDF() {
   var c = lireChamps();
   var msg = document.getElementById('formMsg');
@@ -675,52 +740,183 @@ function genererPDF() {
     return;
   }
   msg.textContent = '';
-  var sigData = window.__getSig ? window.__getSig() : null;
-  var sigInner = sigData ? '<img src="' + sigData + '" style="height:56px;display:block;margin-bottom:4px">' : '<div class="line"></div>';
-  var html = '<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>Inscription supervision psychosomatique - ' + esc(c.nomPrenom) + '</title>' +
-    '<style>' +
-    '@page { margin: 2cm; }' +
-    'body { font-family: Georgia, "Times New Roman", serif; color: #1A1817; font-size: 11pt; line-height: 1.6; }' +
-    'h1 { font-size: 16pt; font-weight: 600; margin: 0 0 4px; line-height: 1.25; }' +
-    'h2 { font-size: 11pt; font-weight: 400; font-style: italic; color: #555; margin: 0 0 26px; }' +
-    '.prow { display: grid; grid-template-columns: 6.5cm 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px solid #E1D7C5; }' +
-    '.plabel { font-weight: 600; font-size: 10.5pt; }' +
-    '.pval { font-size: 11pt; }' +
-    '.sign { margin-top: 42px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }' +
-    '.sign .cell { font-size: 10pt; color: #555; }' +
-    '.sign .line { border-bottom: 1px solid #1A1817; height: 34px; margin-bottom: 4px; }' +
-    'footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid #E1D7C5; font-size: 8.5pt; color: #9A9082; }' +
-    '.addr { margin-top: 22px; font-size: 10pt; color: #333; }' +
-    '</style></head><body>' +
-    '<h1>Inscription pour la formation psychosociale et psychosomatique</h1>' +
-    '<h2>Dans le cadre de l\'obtention du titre de spécialiste en gynécologie et obstétrique</h2>' +
-    ligne('Nom / prénom', c.nomPrenom) +
-    ligne('Adresse', c.adresse) +
-    ligne('CP / lieu', c.cpLieu) +
-    ligne('Téléphone', c.telephone) +
-    ligne('E-mail', c.email) +
-    ligne('Années en gynécologie / obstétrique', c.annees) +
-    ligne('Cours-blocs en psychosomatique', c.coursBlocs) +
-    ligne('Fin prévue / obtention du titre', c.finPrevue) +
-    ligne('Lieu de travail actuel', c.lieuActuel) +
-    ligne('Lieu de travail en 2026 / 2027', c.lieuFutur) +
-    '<div class="sign"><div class="cell">' + sigInner + 'Signature</div><div class="cell"><div class="line"></div>Date : ' + esc(c.dateAff) + '</div></div>' +
-    '<div class="addr">À envoyer à: Prof. em. Sibil Tschudin, Frauenklinik, Gyn. Psychosozialmedizin, Spitalstrasse 21, 4031 Basel. Courriel: Pierrette.Rondez@usb.ch, fax 061 265 90 35.</div>' +
-    '<footer>Formulaire d\'inscription à la supervision psychosomatique SGGG. Généré depuis l\'espace pédagogique de la Dr Saira-Christine Renteria.</footer>' +
-    '</body></html>';
-  var w = window.open('', '_blank');
-  if (!w) {
-    msg.textContent = 'Le navigateur a bloqué la fenêtre. Autorisez les pop-ups pour ce site, puis réessayez.';
-    return;
+
+  try {
+    var MM = 72 / 25.4;
+    var ops = [];
+    function X(mm) { return (mm * MM).toFixed(2); }
+    function Y(mm) { return (mm * MM).toFixed(2); }
+
+    function texte(t, xmm, ymm, size, bold) {
+      if (t === '' || t === null || t === undefined) return;
+      ops.push('BT /' + (bold ? 'F2' : 'F1') + ' ' + size + ' Tf ' + X(xmm) + ' ' + Y(ymm) + ' Td (' + pdfEscape(String(t)) + ') Tj ET');
+    }
+    function pointilles(x1, x2, ymm) {
+      if (x2 - x1 < 1.5) return;
+      ops.push('q 0.5 w [1 2.2] 0 d ' + X(x1) + ' ' + Y(ymm - 0.9) + ' m ' + X(x2) + ' ' + Y(ymm - 0.9) + ' l S Q');
+    }
+    function champ(lab, val, ymm, dotsX, xend, size) {
+      size = size || 12;
+      texte(lab, 22.01, ymm, size, true);
+      var v = (val || '').toString().trim();
+      var w = 0;
+      if (v) { texte(v, dotsX + 0.8, ymm, size, false); w = largeurTexte(v, size, false) + 2.4; }
+      pointilles(dotsX + w, xend, ymm);
+    }
+    function ligneSeule(val, ymm) {
+      var v = (val || '').toString().trim();
+      var w = 0;
+      if (v) { texte(v, 22.81, ymm, 12, false); w = largeurTexte(v, 12, false) + 2.4; }
+      pointilles(22.01 + w, 180.79, ymm);
+    }
+    function caseACocher(xmm, ymm, cochee) {
+      ops.push('q 0.6 w ' + X(xmm) + ' ' + Y(ymm - 0.3) + ' ' + X(3.3) + ' ' + Y(3.3) + ' re S Q');
+      if (cochee) {
+        ops.push('q 0.9 w ' + X(xmm + 0.6) + ' ' + Y(ymm + 0.3) + ' m ' + X(xmm + 2.7) + ' ' + Y(ymm + 2.4) + ' l S '
+               + X(xmm + 2.7) + ' ' + Y(ymm + 0.3) + ' m ' + X(xmm + 0.6) + ' ' + Y(ymm + 2.4) + ' l S Q');
+      }
+    }
+
+    /* en-tete */
+    ops.push('q ' + X(48.7) + ' 0 0 ' + Y(16.1) + ' ' + X(148.5) + ' ' + Y(269.40) + ' cm /Im1 Do Q');
+    texte('Gyn. Psychosozialmedizin', 152.70, 265.39, 10, false);
+
+    /* titre */
+    texte('Inscription pour la formation psychosociale et psychosomatique dans le', 22.94, 236.93, 14, true);
+    texte("cadre de l'obtention du titre de spécialiste en gynécologie et obstétrique", 23.07, 231.28, 14, true);
+
+    /* champs */
+    champ('Nom/prénom :', c.nomPrenom, 214.84, 62.02, 179.66);
+    champ('Adresse :', c.adresse, 205.10, 62.02, 179.66);
+    champ('CP/lieu :', c.cpLieu, 195.37, 62.02, 179.66);
+    champ('Téléphone :', c.telephone, 185.63, 62.02, 179.66);
+    champ('E-mail :', c.email, 175.90, 62.02, 179.66);
+    champ('Années en gynécologie/obstétrique :', c.annees, 166.16, 110.91, 179.15);
+
+    /* cours-blocs */
+    texte('Cours-blocs en psychosomatique :', 22.01, 156.42, 12, true);
+    texte('Participation :', 22.01, 151.55, 12, true);
+    var cb = (c.coursBlocs || '').toLowerCase();
+    caseACocher(51.44, 151.55, cb.indexOf('1 cours') === 0);
+    texte('1 cours-bloc /', 56.6, 151.55, 12, true);
+    caseACocher(85.09, 151.55, cb.indexOf('2 cours') === 0);
+    texte('2 cours-blocs /', 90.2, 151.55, 12, true);
+    caseACocher(121.12, 151.55, cb.indexOf('aucun') === 0);
+    texte('aucun cours-bloc', 126.2, 151.55, 12, true);
+
+    /* fin prevue */
+    texte('Fin prévue de la formation continue/obtention du titre de spécialiste :', 22.01, 141.82, 12, true);
+    var an = (c.finPrevue || '').toString().replace(/[^0-9]/g, '');
+    var suite = an.length >= 4 ? an.slice(2) : an;
+    texte('20', 166.45, 141.82, 12, false);
+    var w20 = largeurTexte('20', 12, false);
+    var xs = 166.45 + w20;
+    if (suite) { texte(suite, xs, 141.82, 12, false); xs += largeurTexte(suite, 12, false) + 1.6; }
+    pointilles(xs, 179.40, 141.82);
+
+    /* lieux de travail */
+    texte('Lieu de travail actuel :', 22.01, 132.08, 12, true);
+    ligneSeule(c.lieuActuel, 124.81);
+    ligneSeule('', 117.47);
+    texte('Lieu de travail en 2026/2027, si connu :', 22.01, 105.34, 12, true);
+    ligneSeule(c.lieuFutur, 98.00);
+    ligneSeule('', 90.73);
+
+    /* signature et date */
+    texte('Signature :', 22.01, 83.40, 12, false);
+    var sigMask = null;
+    var cv = document.getElementById('sigPad');
+    if (cv && sigSigned) { try { sigMask = canvasVersMasque(cv); } catch (e) { sigMask = null; } }
+    if (sigMask) {
+      var bx = sigMask.box;
+      var pw = bx.x1 - bx.x0 + 1, ph = bx.y1 - bx.y0 + 1;
+      var hmm = 5.2, wmm = hmm * pw / ph;
+      if (wmm > 42) { wmm = 42; hmm = wmm * ph / pw; }
+      var sx = 45.0, sy = 84.3;
+      var fullW = wmm * sigMask.w / pw, fullH = hmm * sigMask.h / ph;
+      var ox = sx - fullW * bx.x0 / sigMask.w;
+      var oy = sy - fullH * (sigMask.h - bx.y1 - 1) / sigMask.h;
+      ops.push('q ' + X(fullW) + ' 0 0 ' + Y(fullH) + ' ' + X(ox) + ' ' + Y(oy) + ' cm /Im2 Do Q');
+    }
+    pointilles(44.0, 92.0, 83.40);
+    texte('Date :', 97.5, 83.40, 12, false);
+    var xd = 97.5 + largeurTexte('Date :', 12, false) + 2.0;
+    if (c.dateAff) { texte(c.dateAff, xd, 83.40, 12, false); xd += largeurTexte(c.dateAff, 12, false) + 2.0; }
+    pointilles(xd, 180.97, 83.40);
+
+    /* bloc d'envoi */
+    texte('Veuillez envoyer ce formulaire s.v.p. à :', 22.01, 69.50, 10, true);
+    texte('Prof. em. Sibil Tschudin', 22.01, 63.01, 10, false);
+    texte('Frauenklinik', 22.02, 58.91, 10, false);
+    texte('Gyn. Psychosozialmedizin', 22.02, 54.89, 10, false);
+    texte('Spitalstrasse 21, 4031 Basel', 22.02, 50.84, 10, false);
+    texte('Fax: 061 265 90 35', 22.02, 46.78, 10, false);
+    texte('Courriel: pierrette.rondez@usb.ch', 22.02, 42.72, 10, false);
+
+    /* filet et mention de bas de page */
+    ops.push('q 0.5 w 0.5 G ' + X(22.0) + ' ' + Y(25.10) + ' m ' + X(194.1) + ' ' + Y(25.10) + ' l S Q');
+    ops.push('q 0.35 g');
+    texte('Alle Kontakte und Informationen zu unserer Abteilung finden Sie unter unispital-basel.ch/frauenklinik', 22.01, 19.19, 9, false);
+    ops.push('Q');
+
+    var contenu = ops.join('\n');
+
+    /* assemblage du fichier PDF */
+    var objs = [];
+    objs[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+    objs[2] = '<< /Type /Pages /Kids [3 0 R] /Count 1 >>';
+    var xobj = '/Im1 7 0 R' + (sigMask ? ' /Im2 8 0 R' : '');
+    objs[3] = '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] '
+            + '/Resources << /Font << /F1 5 0 R /F2 6 0 R >> /XObject << ' + xobj + ' >> >> /Contents 4 0 R >>';
+    objs[4] = '<< /Length ' + contenu.length + ' >>\nstream\n' + contenu + '\nendstream';
+    objs[5] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+    objs[6] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+    objs[7] = '<< /Type /XObject /Subtype /Image /Width ' + LOGO_W + ' /Height ' + LOGO_H
+            + ' /ImageMask true /BitsPerComponent 1 /Decode [0 1] /Filter /ASCIIHexDecode /Length '
+            + (LOGO_HEX.length + 1) + ' >>\nstream\n' + LOGO_HEX + '>\nendstream';
+    if (sigMask) {
+      objs[8] = '<< /Type /XObject /Subtype /Image /Width ' + sigMask.w + ' /Height ' + sigMask.h
+              + ' /ImageMask true /BitsPerComponent 1 /Decode [0 1] /Filter /ASCIIHexDecode /Length '
+              + (sigMask.hex.length + 1) + ' >>\nstream\n' + sigMask.hex + '>\nendstream';
+    }
+
+    var pdf = '%PDF-1.4\n';
+    var offsets = [];
+    for (var n = 1; n < objs.length; n++) {
+      if (!objs[n]) continue;
+      offsets[n] = pdf.length;
+      pdf += n + ' 0 obj\n' + objs[n] + '\nendobj\n';
+    }
+    var xrefPos = pdf.length;
+    var maxObj = objs.length;
+    pdf += 'xref\n0 ' + maxObj + '\n0000000000 65535 f \n';
+    for (var n2 = 1; n2 < maxObj; n2++) {
+      var off = offsets[n2] || 0;
+      pdf += ('0000000000' + off).slice(-10) + ' 00000 n \n';
+    }
+    pdf += 'trailer\n<< /Size ' + maxObj + ' /Root 1 0 R >>\nstartxref\n' + xrefPos + '\n%%EOF';
+
+    var bytes = new Uint8Array(pdf.length);
+    for (var i2 = 0; i2 < pdf.length; i2++) bytes[i2] = pdf.charCodeAt(i2) & 0xFF;
+    var blob = new Blob([bytes], { type: 'application/pdf' });
+
+    var nom = (c.nomPrenom || 'inscription').replace(/[^A-Za-z0-9À-ſ \-]/g, '').trim().replace(/\s+/g, ' ');
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Inscription supervision psychosomatique - ' + nom + '.pdf';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 1500);
+
+    pdfDownloaded = true;
+    msg.textContent = 'Formulaire téléchargé. Cliquez maintenant sur "2 · Écrire à Mme Rondez" et joignez ce fichier à l\'email.';
+    msg.style.color = '#2E7D32';
+  } catch (err) {
+    msg.textContent = 'La génération a échoué (' + err.message + '). Merci de me contacter: renteria@hin.ch';
+    msg.style.color = '#B0122E';
   }
-  w.document.open();
-  w.document.write(html);
-  w.document.close();
-  setTimeout(function () { try { w.print(); } catch (e) {} }, 500);
-  pdfDownloaded = true;
-  msg.textContent = 'Formulaire prêt. Enregistrez-le en PDF, puis cliquez sur "2 · Écrire à Mme Rondez" et joignez ce fichier à l\'email.';
-  msg.style.color = '#2E7D32';
 }
+
 </script>
 </body>
 </html>
